@@ -44,6 +44,70 @@ const STEPS = [
   { title: 'Vos coordonnées', intro: 'Recevez votre synthèse et votre plan d’action personnalisé.', screens: [[]]}
 ];
 
+const RULES = [
+  { key: 'sensitive', label: 'Usages sensibles',
+    classify: a => (a.sensitive || []).some(x => !['Aucun de ces usages','Je ne sais pas'].includes(x)) ? 'bad' : 'good',
+    bad: { message: 'Usages sensibles déclarés (RH, crédit, santé, biométrie...) nécessitant une vigilance renforcée.', solution: 'Mettre en place une revue humaine systématique et documenter les garanties pour ces usages.' },
+    good: { message: 'Aucun usage à haut risque nécessitant une revue humaine renforcée.' } },
+  { key: 'humanReview', label: 'Revue humaine',
+    classify: a => a.humanReview === 'Oui, systématiquement selon le risque' ? 'good' : a.humanReview === 'Jamais' ? 'bad' : 'partial',
+    bad: { message: 'Absence de vérification humaine avant une décision importante.', solution: 'Instaurer une vérification humaine avant toute décision importante ou publication à risque.' },
+    partial: { message: 'Vérification humaine seulement partielle ou occasionnelle.', solution: 'Étendre la vérification humaine à l’ensemble des usages à risque, pas seulement à certains cas.' },
+    good: { message: 'Une vérification humaine systématique est prévue selon le risque.' } },
+  { key: 'deepfakeLabel', label: 'Contenus IA',
+    classify: a => ['Oui, systématiquement','Non concerné'].includes(a.deepfakeLabel) ? 'good' : a.deepfakeLabel === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Contenus synthétiques non signalés comme créés ou modifiés par IA.', solution: 'Ajouter un signalement systématique sur tout contenu IA pouvant sembler authentique.' },
+    partial: { message: 'Contenus synthétiques signalés seulement dans certains cas.', solution: 'Généraliser le signalement à l’ensemble des contenus IA concernés.' },
+    good: { message: 'Les contenus synthétiques sont signalés comme créés ou modifiés par IA.' } },
+  { key: 'registry', label: 'Registre',
+    classify: a => a.registry === 'Oui, complet et régulièrement mis à jour' ? 'good' : a.registry === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Aucun registre des outils, finalités, utilisateurs et données.', solution: 'Créer un registre recensant les outils IA, leurs finalités, utilisateurs et données traitées.' },
+    partial: { message: 'Registre existant mais incomplet ou en cours de création.', solution: 'Compléter le registre et le mettre à jour régulièrement.' },
+    good: { message: 'Un registre des outils, finalités, utilisateurs et données est tenu à jour.' } },
+  { key: 'training', label: 'Formation',
+    classify: a => a.training === 'Oui, toutes les personnes concernées' ? 'good' : a.training === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Les personnes qui utilisent ou supervisent l’IA ne sont pas formées.', solution: 'Mettre en place une sensibilisation ou une formation pour toutes les personnes concernées.' },
+    partial: { message: 'Formation partielle : seules certaines personnes sont formées, ou une formation est seulement planifiée.', solution: 'Étendre la formation à l’ensemble des personnes concernées et fixer un calendrier de déploiement.' },
+    good: { message: 'Les personnes qui utilisent ou supervisent l’IA sont formées.' } },
+  { key: 'policy', label: 'Charte IA',
+    classify: a => a.policy === 'Oui, diffusée et appliquée' ? 'good' : a.policy === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Aucune charte IA formalisée ni diffusée.', solution: 'Rédiger une charte IA et la diffuser à l’ensemble des collaborateurs.' },
+    partial: { message: 'Charte IA incomplète ou encore en préparation.', solution: 'Finaliser la charte IA et organiser sa diffusion effective.' },
+    good: { message: 'Une charte IA est formalisée et diffusée.' } },
+  { key: 'chatbotNotice', label: 'Chatbot',
+    classify: a => ['Oui, claire et visible','Non concerné'].includes(a.chatbotNotice) ? 'good' : a.chatbotNotice === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Les personnes ne sont pas informées qu’elles interagissent avec une IA.', solution: 'Ajouter une mention claire et visible dès la première interaction avec le chatbot.' },
+    partial: { message: 'La mention informant d’une interaction avec une IA est peu visible.', solution: 'Rendre la mention plus visible dès le début de l’échange.' },
+    good: { message: 'Les personnes sont informées qu’elles interagissent avec une IA.' } },
+  { key: 'evidence', label: 'Preuves',
+    classify: a => a.evidence === 'Oui, programme, dates, participants et attestations' ? 'good' : a.evidence === 'Non' ? 'bad' : 'partial',
+    bad: { message: 'Aucune preuve des mesures de formation et de gouvernance.', solution: 'Conserver les preuves des actions menées : programme, dates, participants, attestations.' },
+    partial: { message: 'Preuves des mesures de formation ou de gouvernance incomplètes.', solution: 'Compléter la documentation existante avec les éléments manquants (dates, participants, attestations).' },
+    good: { message: 'Les preuves des mesures de formation et de gouvernance sont conservées.' } },
+];
+
+function Logo() {
+  return <div className="logo"><svg viewBox="0 0 64 64" className="logo-icon" aria-hidden="true">
+    <rect x="10" y="4" width="44" height="56" rx="6" fill="#7a1327" stroke="#c9a84c" strokeWidth="1.5" />
+    <path d="M10 10 L18 4 L18 10 Z" fill="#5c0e1d" />
+    <circle cx="32" cy="26" r="10" fill="none" stroke="#c9a84c" strokeWidth="1.6" />
+    <circle cx="21" cy="26" r="3" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
+    <circle cx="43" cy="26" r="3" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
+    <path d="M24 22 A9 9 0 0 1 40 22" fill="none" stroke="#c9a84c" strokeWidth="1.2" />
+    <circle cx="32" cy="15" r="1.6" fill="#c9a84c" />
+    <line x1="32" y1="13" x2="32" y2="16.5" stroke="#c9a84c" strokeWidth="1.2" />
+    <circle cx="28" cy="26" r="1.4" fill="#c9a84c" />
+    <circle cx="36" cy="26" r="1.4" fill="#c9a84c" />
+    <rect x="26" y="44" width="12" height="8" rx="2" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
+    <line x1="26" y1="48" x2="38" y2="48" stroke="#c9a84c" strokeWidth="1" />
+  </svg>
+  <div className="logo-text">
+    <div className="logo-bar blue"><span /></div>
+    <div className="logo-words"><span className="navy">PASSEPORT</span> <span className="red">IA</span></div>
+    <div className="logo-bar red"><span /></div>
+  </div></div>;
+}
+
 function Stepper({ current, steps }) {
   return <ol className="stepper">{steps.map((s, i) => <li key={s.title} className={i < current ? 'done' : i === current ? 'active' : ''}><span className="dot">{i < current ? '✓' : i + 1}</span></li>)}</ol>;
 }
@@ -55,15 +119,23 @@ function Choice({ id, label, options, multiple, value, setAnswer }) {
 }
 
 function App() {
-  const [step, setStep] = useState(0); const [screen, setScreen] = useState(0); const [answers, setAnswers] = useState({}); const [result, setResult] = useState(null);
+  const [step, setStep] = useState(0); const [screen, setScreen] = useState(0); const [answers, setAnswers] = useState({}); const [result, setResult] = useState(null); const [openIssue, setOpenIssue] = useState(null);
   const setAnswer = (id, value) => setAnswers(prev => ({...prev, [id]: value}));
   const current = STEPS[step]; const lastStep = STEPS.length - 1; const lastScreen = current.screens.length - 1; const questions = current.screens[screen];
   const complete = useMemo(() => questions.every(([id]) => answers[id]), [questions, answers]);
   const goNext = () => { if (screen < lastScreen) setScreen(screen + 1); else { setStep(step + 1); setScreen(0); } };
   const goPrev = () => { if (screen > 0) setScreen(screen - 1); else { setStep(step - 1); setScreen(STEPS[step - 1].screens.length - 1); } };
   const isFirst = step === 0 && screen === 0; const isLast = step === lastStep && screen === lastScreen;
-  const finish = async () => { const fallback = () => { const critical = []; const alerts = []; if ((answers.sensitive || []).some(x => !['Aucun de ces usages', 'Je ne sais pas'].includes(x))) critical.push('Revue humaine requise pour les usages sensibles déclarés.'); if (answers.humanReview === 'Jamais') critical.push('Absence de vérification humaine avant une décision importante.'); if (answers.deepfakeLabel === 'Non') critical.push('Contenus synthétiques potentiellement non signalés.'); [['registry','Non','Créer un registre des usages IA.'],['training','Non','Former les personnes qui utilisent ou supervisent l’IA.'],['policy','Non','Formaliser et diffuser une charte IA.'],['chatbotNotice','Non','Informer clairement les utilisateurs du chatbot.']].forEach(([k,v,m]) => answers[k]===v && alerts.push(m)); const evidence = ['registry','training','evidence','policy','humanReview','chatbotNotice'].filter(k => answers[k] && !['Non','Jamais','Je ne sais pas'].includes(answers[k])).length; return {score: Math.round(evidence / 6 * 100), critical, alerts}; }; try { const r=await fetch('http://localhost:3001/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({answers})}); setResult(r.ok ? await r.json() : fallback()); } catch { setResult(fallback()); }};
-  if (result) return <main><header><span className="brand">PASSEPORT <b>IA</b></span><span>Audit AI Act</span></header><section className="card results"><p className="eyebrow">DIAGNOSTIC AI ACT</p><h1>Votre résultat</h1><div className="score"><strong>{result.score}<small>/100</small></strong><span>Maturité déclarative</span></div><p className="notice">Ce résultat est indicatif : il ne constitue pas une certification de conformité ni un avis juridique.</p>{result.critical?.length>0 && <section className="alert critical"><h2>Revue prioritaire</h2><ul>{result.critical.map(x=><li key={x}>{x}</li>)}</ul></section>}<section><h2>Vos prochaines actions</h2><ol>{(result.alerts?.length ? result.alerts : ['Consolider les preuves de vos mesures et réévaluer régulièrement vos usages.']).map(x=><li key={x}>{x}</li>)}</ol></section><button onClick={()=>{setStep(0);setScreen(0);setResult(null);setAnswers({})}}>Recommencer l’audit</button></section></main>;
+  const finish = async () => { const fallback = () => { const bad = [], partial = [], good = []; RULES.forEach(rule => { const state = rule.classify(answers); const item = { key: rule.key, label: rule.label, ...rule[state] }; (state === 'bad' ? bad : state === 'partial' ? partial : good).push(item); }); return {bad, partial, good, total: RULES.length}; }; try { const r=await fetch('http://localhost:3001/api/results',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({answers})}); setResult(r.ok ? await r.json() : fallback()); } catch { setResult(fallback()); }};
+  if (result) {
+    const negative = [...result.bad.map(i=>({...i,tone:'bad'})), ...result.partial.map(i=>({...i,tone:'partial'}))];
+    const positive = result.good.map(i=>({...i,tone:'ok'}));
+    const risk = Math.round(((result.bad.length + result.partial.length * 0.5) / result.total) * 100);
+    const conforme = negative.length === 0;
+    const tone = conforme ? 'ok' : 'bad';
+    const renderGroup = items => <div className="issues">{items.length === 0 ? <p className="issues-empty">Aucun point.</p> : items.map(item => <div key={item.key} className="issue"><button className={'issue-btn ' + item.tone + (openIssue === item.key ? ' open' : '')} aria-expanded={openIssue === item.key} onClick={() => setOpenIssue(openIssue === item.key ? null : item.key)}><span>{item.label}</span><svg className="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></button>{openIssue === item.key && <div className={'issue-explain ' + item.tone}><p>{item.message}</p>{item.solution && <p className="issue-solution"><strong>Solution : </strong>{item.solution}</p>}</div>}</div>)}</div>;
+    return <main><header className="results-top"><span className={'status-badge ' + tone}>{conforme ? 'CONFORME' : 'NON CONFORME'}</span><Logo /></header><section className="card results"><div className="risk"><strong className={tone}>{risk}<small>%</small></strong><span>Taux de non-conformité</span></div><div className="result-bar"><span className={tone} style={{width: `${risk}%`}} /></div><div className="results-columns"><div className="col"><h2 className="group-title bad">À corriger</h2>{renderGroup(negative)}</div><div className="col"><h2 className="group-title ok">Conforme</h2>{renderGroup(positive)}</div></div><p className="notice">Ce résultat est indicatif : il ne constitue pas une certification de conformité ni un avis juridique.</p><button onClick={()=>{setStep(0);setScreen(0);setResult(null);setAnswers({});setOpenIssue(null)}}>Recommencer l’audit</button></section></main>;
+  }
   return <main><header><span className="brand">PASSEPORT <b>IA</b></span><span>Audit AI Act</span></header><Stepper current={step} steps={STEPS} /><section className="card"><h1>{current.title}</h1><p className="intro">{current.intro}</p>{questions.map(([id,label,options,multiple])=><Choice key={id} id={id} label={label} options={options} multiple={multiple} value={answers[id]} setAnswer={setAnswer}/>) }{step===lastStep && <section className="contact"><label>Prénom<input required onChange={e=>setAnswer('firstName',e.target.value)} /></label><label>Nom<input required onChange={e=>setAnswer('lastName',e.target.value)} /></label><label>Entreprise<input required onChange={e=>setAnswer('company',e.target.value)} /></label><label>E-mail<input type="email" required onChange={e=>setAnswer('email',e.target.value)} /></label><label>Téléphone (facultatif)<input onChange={e=>setAnswer('phone',e.target.value)} /></label><label className="check contact-consent"><input type="checkbox" checked={answers.consent || false} onChange={e=>setAnswer('consent',e.target.checked)} className="sr-only" /><span className="box" aria-hidden="true" /><span>J’accepte le traitement de mes données pour recevoir mon résultat.</span></label></section>}</section><nav>{!isFirst ? <button className="secondary" onClick={goPrev}>← Précédent</button> : <span />}{!isLast ? <button disabled={!complete} onClick={goNext}>Continuer →</button> : <button disabled={!answers.firstName || !answers.lastName || !answers.company || !answers.email || !answers.consent} onClick={finish}>Voir mes résultats →</button>}</nav></main>
 }
 createRoot(document.getElementById('root')).render(<App/>);
