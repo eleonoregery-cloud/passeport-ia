@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { supabase } from './supabaseClient.js';
+import logoUrl from './assets/logo-passeport-ia-fond-blanc.png';
 import './styles.css';
 
 function LoginForm() {
@@ -21,7 +22,8 @@ function LoginForm() {
   return (
     <main className="login">
       <form className="card" onSubmit={submit}>
-        <h1>Passeport IA — Back-office</h1>
+        <img src={logoUrl} alt="Passeport IA" className="logo-img" />
+        <h1>Back-office</h1>
         <label>E-mail<input type="email" required value={email} onChange={e => setEmail(e.target.value)} /></label>
         <label>Mot de passe<input type="password" required value={password} onChange={e => setPassword(e.target.value)} /></label>
         {error && <p className="error">{error}</p>}
@@ -109,7 +111,10 @@ function Dashboard({ session }) {
   return (
     <main>
       <header className="topbar">
-        <h1>Soumissions</h1>
+        <div className="topbar-brand">
+          <img src={logoUrl} alt="Passeport IA" className="logo-img" />
+          <h1>Soumissions</h1>
+        </div>
         <div className="topbar-actions">
           <span>{session.user.email}</span>
           <button className="secondary" onClick={() => supabase.auth.signOut()}>Déconnexion</button>

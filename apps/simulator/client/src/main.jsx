@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import logoUrl from './assets/logo-passeport-ia-fond-blanc.png';
 import './styles.css';
 
 const STEPS = [
@@ -87,25 +88,7 @@ const RULES = [
 ];
 
 function Logo() {
-  return <div className="logo"><svg viewBox="0 0 64 64" className="logo-icon" aria-hidden="true">
-    <rect x="10" y="4" width="44" height="56" rx="6" fill="#7a1327" stroke="#c9a84c" strokeWidth="1.5" />
-    <path d="M10 10 L18 4 L18 10 Z" fill="#5c0e1d" />
-    <circle cx="32" cy="26" r="10" fill="none" stroke="#c9a84c" strokeWidth="1.6" />
-    <circle cx="21" cy="26" r="3" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
-    <circle cx="43" cy="26" r="3" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
-    <path d="M24 22 A9 9 0 0 1 40 22" fill="none" stroke="#c9a84c" strokeWidth="1.2" />
-    <circle cx="32" cy="15" r="1.6" fill="#c9a84c" />
-    <line x1="32" y1="13" x2="32" y2="16.5" stroke="#c9a84c" strokeWidth="1.2" />
-    <circle cx="28" cy="26" r="1.4" fill="#c9a84c" />
-    <circle cx="36" cy="26" r="1.4" fill="#c9a84c" />
-    <rect x="26" y="44" width="12" height="8" rx="2" fill="none" stroke="#c9a84c" strokeWidth="1.4" />
-    <line x1="26" y1="48" x2="38" y2="48" stroke="#c9a84c" strokeWidth="1" />
-  </svg>
-  <div className="logo-text">
-    <div className="logo-bar blue"><span /></div>
-    <div className="logo-words"><span className="navy">PASSEPORT</span> <span className="red">IA</span></div>
-    <div className="logo-bar red"><span /></div>
-  </div></div>;
+  return <img src={logoUrl} alt="Passeport IA" className="logo-img" />;
 }
 
 function Stepper({ current, steps }) {
@@ -136,6 +119,6 @@ function App() {
     const renderGroup = items => <div className="issues">{items.length === 0 ? <p className="issues-empty">Aucun point.</p> : items.map(item => <div key={item.key} className="issue"><button className={'issue-btn ' + item.tone + (openIssue === item.key ? ' open' : '')} aria-expanded={openIssue === item.key} onClick={() => setOpenIssue(openIssue === item.key ? null : item.key)}><span>{item.label}</span><svg className="chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></button>{openIssue === item.key && <div className={'issue-explain ' + item.tone}><p>{item.message}</p>{item.solution && <p className="issue-solution"><strong>Solution : </strong>{item.solution}</p>}</div>}</div>)}</div>;
     return <main><header className="results-top"><span className={'status-badge ' + tone}>{conforme ? 'CONFORME' : 'NON CONFORME'}</span><Logo /></header><section className="card results"><div className="risk"><strong className={tone}>{risk}<small>%</small></strong><span>Taux de non-conformité</span></div><div className="result-bar"><span className={tone} style={{width: `${risk}%`}} /></div><div className="results-columns"><div className="col"><h2 className="group-title bad">À corriger</h2>{renderGroup(negative)}</div><div className="col"><h2 className="group-title ok">Conforme</h2>{renderGroup(positive)}</div></div><p className="notice">Ce résultat est indicatif : il ne constitue pas une certification de conformité ni un avis juridique.</p><button onClick={()=>{setStep(0);setScreen(0);setResult(null);setAnswers({});setOpenIssue(null)}}>Recommencer l’audit</button></section></main>;
   }
-  return <main><header><span className="brand">PASSEPORT <b>IA</b></span><span>Audit AI Act</span></header><Stepper current={step} steps={STEPS} /><section className="card"><h1>{current.title}</h1><p className="intro">{current.intro}</p>{questions.map(([id,label,options,multiple])=><Choice key={id} id={id} label={label} options={options} multiple={multiple} value={answers[id]} setAnswer={setAnswer}/>) }{step===lastStep && <section className="contact"><label>Prénom<input required onChange={e=>setAnswer('firstName',e.target.value)} /></label><label>Nom<input required onChange={e=>setAnswer('lastName',e.target.value)} /></label><label>Entreprise<input required onChange={e=>setAnswer('company',e.target.value)} /></label><label>E-mail<input type="email" required onChange={e=>setAnswer('email',e.target.value)} /></label><label>Téléphone (facultatif)<input onChange={e=>setAnswer('phone',e.target.value)} /></label><label className="check contact-consent"><input type="checkbox" checked={answers.consent || false} onChange={e=>setAnswer('consent',e.target.checked)} className="sr-only" /><span className="box" aria-hidden="true" /><span>J’accepte le traitement de mes données pour recevoir mon résultat.</span></label></section>}</section><nav>{!isFirst ? <button className="secondary" onClick={goPrev}>← Précédent</button> : <span />}{!isLast ? <button disabled={!complete} onClick={goNext}>Continuer →</button> : <button disabled={!answers.firstName || !answers.lastName || !answers.company || !answers.email || !answers.consent} onClick={finish}>Voir mes résultats →</button>}</nav></main>
+  return <main><header><Logo /><span>Audit AI Act</span></header><Stepper current={step} steps={STEPS} /><section className="card"><h1>{current.title}</h1><p className="intro">{current.intro}</p>{questions.map(([id,label,options,multiple])=><Choice key={id} id={id} label={label} options={options} multiple={multiple} value={answers[id]} setAnswer={setAnswer}/>) }{step===lastStep && <section className="contact"><label>Prénom<input required onChange={e=>setAnswer('firstName',e.target.value)} /></label><label>Nom<input required onChange={e=>setAnswer('lastName',e.target.value)} /></label><label>Entreprise<input required onChange={e=>setAnswer('company',e.target.value)} /></label><label>E-mail<input type="email" required onChange={e=>setAnswer('email',e.target.value)} /></label><label>Téléphone (facultatif)<input onChange={e=>setAnswer('phone',e.target.value)} /></label><label className="check contact-consent"><input type="checkbox" checked={answers.consent || false} onChange={e=>setAnswer('consent',e.target.checked)} className="sr-only" /><span className="box" aria-hidden="true" /><span>J’accepte le traitement de mes données pour recevoir mon résultat.</span></label></section>}</section><nav>{!isFirst ? <button className="secondary" onClick={goPrev}>← Précédent</button> : <span />}{!isLast ? <button disabled={!complete} onClick={goNext}>Continuer →</button> : <button disabled={!answers.firstName || !answers.lastName || !answers.company || !answers.email || !answers.consent} onClick={finish}>Voir mes résultats →</button>}</nav></main>
 }
 createRoot(document.getElementById('root')).render(<App/>);

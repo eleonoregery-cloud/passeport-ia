@@ -58,6 +58,7 @@ p{color:var(--noir)}
 
 /* ---------- logo ---------- */
 .logo{display:inline-flex;align-items:center;gap:11px;text-decoration:none}
+.logo-img{height:38px;width:auto;display:block}
 .logo-mark{width:30px;height:38px;flex-shrink:0}
 .logo-txt{display:flex;flex-direction:column;line-height:1}
 .logo-bar{height:3px;width:100%;border-radius:1px}
