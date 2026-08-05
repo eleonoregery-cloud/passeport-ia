@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CZJYCHYTFE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CZJYCHYTFE');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | Passeport IA</title>
+<meta name="description" content="Une question sur l'AI Act, nos offres ou votre diagnostic ? Écrivez-nous, nous répondons sous 48 heures.">
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Passeport IA">
+<link rel="manifest" href="site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="w bar">
+    <a href="index.html" class="logo" aria-label="Passeport IA, retour à l'accueil">
+      <img src="logo-passeport-ia-fond-blanc.png" alt="Passeport IA" class="logo-img">
+    </a>
+    <nav>
+      <a href="index.html#concerne" class="n">Suis-je concerné ?</a>
+      <a href="index.html#offres" class="n">Nos offres</a>
+      <a href="index.html#dates" class="n">Les vraies dates</a>
+      <a href="articles.html" class="n">Articles</a>
+      <a href="/diagnostic" class="btn p sm">Diagnostic gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<div class="doc w-etroit">
+  <p class="eyebrow">Contact</p>
+  <h1>Une question ? Écrivez-nous.</h1>
+  <p class="lead" style="margin-bottom:32px">Un point sur l'AI Act, nos offres, votre diagnostic ou autre chose : décrivez votre situation, nous répondons sous 48 heures ouvrées.</p>
+
+  <div id="form-msg" role="status" aria-live="polite"></div>
+
+  <form id="contact-form" class="form-contact" novalidate>
+    <div class="champ">
+      <label for="name">Nom et prénom</label>
+      <input id="name" name="name" type="text" autocomplete="name" required>
+    </div>
+    <div class="champ">
+      <label for="email">E-mail professionnel</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+    </div>
+    <div class="champ">
+      <label for="company">Entreprise <span style="font-weight:400;color:var(--gris-doux)">(facultatif)</span></label>
+      <input id="company" name="company" type="text" autocomplete="organization">
+    </div>
+    <div class="champ">
+      <label for="message">Votre message</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+    <!-- Champ piège anti-spam : reste vide et caché pour un humain -->
+    <div class="hp" aria-hidden="true">
+      <label for="website">Laissez ce champ vide</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <button type="submit" class="btn p bl" id="submit-btn">Envoyer le message</button>
+    <p style="font-size:13px;color:var(--gris-doux);margin-top:12px">En envoyant ce formulaire, vous acceptez que vos coordonnées soient utilisées pour vous répondre. Voir notre <a class="lien" href="confidentialite.html">politique de confidentialité</a>.</p>
+  </form>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('contact-form');
+  var btn = document.getElementById('submit-btn');
+  var msg = document.getElementById('form-msg');
+
+  function showMsg(text, tone) {
+    msg.innerHTML = '<div class="form-msg ' + tone + '">' + text + '</div>';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (form.website.value) return; // piège anti-spam rempli -> on ignore silencieusement
+
+    var data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      company: form.company.value.trim(),
+      message: form.message.value.trim(),
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+    msg.innerHTML = '';
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(function (r) { return r.json().then(function (body) { return { ok: r.ok, body: body }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          form.reset();
+          form.style.display = 'none';
+          showMsg('Message envoyé. Nous vous répondons sous 48 heures ouvrées.', 'ok');
+        } else {
+          throw new Error(res.body && res.body.error ? res.body.error : 'Erreur inconnue');
+        }
+      })
+      .catch(function (err) {
+        showMsg('Envoi impossible pour le moment (' + err.message + '). Vous pouvez aussi écrire directement à <a class="lien" href="mailto:contact@passeport-ia.fr">contact@passeport-ia.fr</a>.', 'err');
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Envoyer le message';
+      });
+  });
+})();
+</script>
+
+<footer>
+  <div class="w">
+    <div class="pg">
+      <div>
+        <p style="font-size:14px;color:var(--gris-txt);max-width:250px">La mise en conformité IA des TPE et PME françaises, en français et sans jargon.</p>
+      </div>
+      <div>
+        <h4>Nos offres</h4>
+        <a href="/diagnostic">Diagnostic gratuit</a>
+        <a href="index.html#offres">Nos trois packs</a>
+        <a href="index.html#offres">Formation Article 4</a>
+      </div>
+      <div>
+        <h4>Comprendre</h4>
+        <a href="articles.html">Tous les articles</a>
+        <a href="index.html#concerne">Suis-je concerné ?</a>
+        <a href="index.html#dates">Les vraies dates</a>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+        <a href="cgv.html">Conditions générales de vente</a>
+        <a href="contact.html">Nous contacter</a>
+      </div>
+    </div>
+    <div class="mentions">
+      <p>Passeport IA est une initiative indépendante, sans lien avec les services de l'État ni avec aucune autorité publique.</p>
+      <p style="margin-top:12px">© 2026 Passeport IA</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
