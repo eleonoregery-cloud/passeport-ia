@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/diagnostic", "destination": "https://REMPLACER-PAR-URL-SIMULATEUR.vercel.app/diagnostic" },
-    { "source": "/diagnostic/:path*", "destination": "https://REMPLACER-PAR-URL-SIMULATEUR.vercel.app/diagnostic/:path*" }
+    { "source": "/diagnostic", "destination": "https://passeport-ia-simulator.vercel.app/diagnostic" },
+    { "source": "/diagnostic/:path*", "destination": "https://passeport-ia-simulator.vercel.app/diagnostic/:path*" }
   ]
 }
