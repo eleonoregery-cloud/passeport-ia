@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournisseur ou déployeur d'IA ? La distinction qui décide de vos obligations</title>
+<meta name="description" content="L'article 50 ne répartit pas les mêmes obligations entre le fournisseur d'un système d'IA et celui qui l'utilise. Décryptage de la distinction, et du piège de l'article 25.">
+<link rel="canonical" href="https://passeport-ia.fr/fournisseur-ou-deployeur-ia.html">
+<meta property="og:title" content="Fournisseur ou déployeur d'IA ? La distinction qui décide de vos obligations">
+<meta property="og:description" content="L'article 50 ne répartit pas les mêmes obligations entre le fournisseur d'un système d'IA et celui qui l'utilise. Décryptage de la distinction, et du piège de l'article 25.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="logo.png">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Fournisseur ou déployeur d'IA : comment savoir de quel côté vous êtes", "description": "L'article 50 ne répartit pas les mêmes obligations entre le fournisseur d'un système d'IA et celui qui l'utilise. Décryptage de la distinction, et du piège de l'article 25.", "datePublished": "2026-08-04", "dateModified": "2026-08-04", "inLanguage": "fr-FR", "author": {"@type": "Organization", "name": "Passeport IA"}, "publisher": {"@type": "Organization", "name": "Passeport IA"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://passeport-ia.fr/fournisseur-ou-deployeur-ia.html"}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Suis-je fournisseur si j'utilise l'API d'OpenAI dans mon produit ?", "acceptedAnswer": {"@type": "Answer", "text": "Cela dépend de ce que vous en faites. Si vous intégrez l'API dans un produit que vous commercialisez sous votre marque, vous êtes fournisseur du système que vous mettez sur le marché, au sens de l'article 25. Si vous l'utilisez en interne, vous restez déployeur."}}, {"@type": "Question", "name": "Mon prestataire doit-il gérer ma conformité à ma place ?", "acceptedAnswer": {"@type": "Answer", "text": "En partie seulement. Le marquage technique des contenus relève du fournisseur du modèle. Mais la formation de vos salariés, le registre de vos usages et le signalement de ce que vous publiez restent vos obligations propres."}}, {"@type": "Question", "name": "Un chatbot à ma marque me rend-il fournisseur ?", "acceptedAnswer": {"@type": "Answer", "text": "Très probablement, oui. L'article 25(1)(a) vise expressément l'apposition de son nom ou de sa marque sur un système d'IA déjà mis sur le marché."}}]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://passeport-ia.fr/"}, {"@type": "ListItem", "position": 2, "name": "Articles", "item": "https://passeport-ia.fr/articles.html"}, {"@type": "ListItem", "position": 3, "name": "Fournisseur ou déployeur d'IA : comment savoir de quel côté vous êtes"}]}]</script>
+</head>
+<body>
+<header>
+  <div class="w hd">
+    <a href="index.html" class="logo">
+      <svg class="logo-mark" viewBox="0 0 30 38" aria-hidden="true">
+        <rect x="2" y="2" width="24" height="34" rx="3" fill="#741424"/>
+        <rect x="4.5" y="4.5" width="19" height="29" rx="2" fill="none" stroke="#C9962B" stroke-width="1"/>
+        <circle cx="14" cy="16" r="5" fill="none" stroke="#C9962B" stroke-width="1.4"/>
+        <circle cx="12" cy="16" r="1.1" fill="#C9962B"/><circle cx="16" cy="16" r="1.1" fill="#C9962B"/>
+        <path d="M11 10.5v-2M17 10.5v-2" stroke="#C9962B" stroke-width="1.2" stroke-linecap="round"/>
+        <rect x="9" y="25" width="10" height="4" rx="1" fill="none" stroke="#C9962B" stroke-width="1.1"/>
+        <circle cx="14" cy="27" r="1" fill="#C9962B"/>
+        <path d="M26 6v28" stroke="#741424" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-txt">
+        <span class="logo-bar b"></span>
+        <span class="logo-nom"><span class="p">PASSEPORT</span> <span class="i">IA</span></span>
+        <span class="logo-bar r"></span>
+      </span>
+    </a>
+    <nav>
+      <a href="index.html#concerne" class="n">Suis-je concerné ?</a>
+      <a href="index.html#offres" class="n">Nos offres</a>
+      <a href="articles.html" class="n">Articles</a>
+      <a href="index.html#diagnostic" class="btn p sm">Diagnostic gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<div class="art-tete">
+  <div class="w wn">
+    <nav class="fil" aria-label="Fil d'Ariane">
+      <a href="index.html">Accueil</a> <span aria-hidden="true">›</span>
+      <a href="articles.html">Articles</a> <span aria-hidden="true">›</span>
+      <span>Comprendre le texte</span>
+    </nav>
+    <p class="eyebrow">Comprendre le texte</p>
+    <h1>Fournisseur ou déployeur d'IA : comment savoir de quel côté vous êtes</h1>
+    <p class="art-chapo">C'est la question la plus mal comprise du règlement, et celle qui fait acheter des prestations inutiles. Voici comment trancher, obligation par obligation.</p>
+    <p class="art-info">Mis à jour le 4 août 2026 · 8 min de lecture</p>
+  </div>
+</div>
+
+<article class="art-corps">
+  <div class="w wn">
+    
+<h2>Deux rôles, deux régimes</h2>
+<p>L'article 3 du règlement définit le fournisseur comme la personne qui développe un système d'IA ou le fait développer, et le met sur le marché ou en service sous son propre nom ou sa propre marque. Le déployeur est celui qui utilise un système d'IA sous sa propre autorité, sauf dans le cadre d'une activité personnelle non professionnelle.</p>
+<p>Traduit en français courant : celui qui fabrique, et celui qui se sert.</p>
+
+<h2>La répartition réelle des obligations de l'article 50</h2>
+<p>C'est le tableau qu'il faut avoir en tête. Il évite de payer pour des obligations qui ne sont pas les vôtres.</p>
+<div class="tbl-scroll">
+<table class="tbl">
+  <thead><tr><th>Paragraphe</th><th>Obligation</th><th>Qui est tenu</th></tr></thead>
+  <tbody>
+    <tr><td>50(1)</td><td>Informer la personne qu'elle interagit avec une IA</td><td class="hi-b">Fournisseur</td></tr>
+    <tr><td>50(2)</td><td>Marquer les contenus générés dans un format lisible par machine</td><td class="hi-b">Fournisseur</td></tr>
+    <tr><td>50(3)</td><td>Informer les personnes exposées à un système de reconnaissance des émotions ou de catégorisation biométrique</td><td class="hi-r">Déployeur</td></tr>
+    <tr><td>50(4)</td><td>Signaler les images, sons et vidéos générés ou manipulés (deepfakes), et certains textes d'intérêt public</td><td class="hi-r">Déployeur</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Autrement dit : le filigrane technique n'est pas votre problème. Le signalement visible de ce que vous publiez, si.</p>
+
+<h2>L'article 25, la bascule que personne ne voit venir</h2>
+<p>L'article 25 prévoit qu'un déployeur, un distributeur ou un importateur est considéré comme un fournisseur, et se voit appliquer l'intégralité des obligations correspondantes, dans trois cas.</p>
+<ol class="liste-num">
+  <li>Il appose son nom ou sa marque sur un système d'IA déjà mis sur le marché.</li>
+  <li>Il apporte une modification substantielle à un système d'IA à haut risque déjà mis sur le marché.</li>
+  <li>Il modifie la destination d'un système, au point de le faire entrer dans la catégorie haut risque.</li>
+</ol>
+<p>Le premier cas est le plus fréquent chez les PME. Vous achetez une solution de chatbot en marque blanche, vous l'appelez « l'assistant de [votre entreprise] », vous l'alimentez avec vos contenus. Vous venez de basculer.</p>
+<div class="encadre">
+  <p class="encadre-t">En pratique</p>
+  <p>Le test simple : si votre client, en voyant l'outil, pense qu'il s'agit de votre outil et non de celui d'un tiers, vous êtes probablement fournisseur au sens de l'article 25. Le nom affiché et l'apparence comptent plus que le contrat que vous avez signé avec l'éditeur.</p>
+</div>
+
+<h2>Trois situations concrètes</h2>
+<p><strong>Un cabinet comptable dont les collaborateurs rédigent des synthèses avec ChatGPT.</strong> Déployeur, uniquement. Aucune obligation de marquage. L'article 4 sur la formation s'applique. Si des documents destinés au public sont publiés, l'exemption de relecture humaine joue généralement.</p>
+<p><strong>Une agence de communication qui publie des visuels générés par IA pour ses clients.</strong> Déployeur, avec l'obligation de l'article 50(4) : les images générées ou manipulées doivent être signalées comme telles. C'est une obligation qui porte sur la publication, donc sur l'agence et sur l'annonceur selon la répartition contractuelle.</p>
+<p><strong>Un site e-commerce avec un assistant conversationnel à sa marque.</strong> Fournisseur au sens de l'article 25, très probablement. Le régime complet s'applique, à commencer par l'information de l'utilisateur au premier contact.</p>
+
+<h2>Pourquoi cette distinction vous fait économiser de l'argent</h2>
+<p>Beaucoup de prestations vendues aujourd'hui promettent une conformité totale à l'article 50, marquage technique compris. Si vous êtes uniquement déployeur, une partie de ce périmètre n'est tout simplement pas la vôtre, et le prestataire ne peut de toute façon rien y faire : le filigrane est produit par le modèle, pas par votre site.</p>
+<p>Ce que vous devez couvrir, c'est ce qui relève de vous : le registre de vos usages, la charte de vos salariés, le signalement de ce que vous publiez, et la formation prévue par l'article 4.</p>
+
+<h2>Comment on tranche pour vous</h2>
+<p>Le diagnostic gratuit pose la question sous quatre angles différents, parce qu'un dirigeant ne sait pas toujours ce qui a été installé sur son propre site. Le rapport vous dit à quel titre vous êtes tenu, obligation par obligation, et ce que vous pouvez ignorer.</p>
+
+    <h2>Questions fréquentes</h2>
+<div class="faq-art">
+<details><summary>Suis-je fournisseur si j'utilise l'API d'OpenAI dans mon produit ?</summary><p>Cela dépend de ce que vous en faites. Si vous intégrez l'API dans un produit que vous commercialisez sous votre marque, vous êtes fournisseur du système que vous mettez sur le marché, au sens de l'article 25. Si vous l'utilisez en interne, vous restez déployeur.</p></details>
+<details><summary>Mon prestataire doit-il gérer ma conformité à ma place ?</summary><p>En partie seulement. Le marquage technique des contenus relève du fournisseur du modèle. Mais la formation de vos salariés, le registre de vos usages et le signalement de ce que vous publiez restent vos obligations propres.</p></details>
+<details><summary>Un chatbot à ma marque me rend-il fournisseur ?</summary><p>Très probablement, oui. L'article 25(1)(a) vise expressément l'apposition de son nom ou de sa marque sur un système d'IA déjà mis sur le marché.</p></details>
+</div>
+
+    <div class="art-cta">
+      <p class="art-cta-t">Où en est votre entreprise ?</p>
+      <p class="art-cta-p">25 questions, cinq minutes, et vous obtenez votre score, vos trois priorités et votre exposition chiffrée. Gratuit, sans engagement et sans carte bancaire.</p>
+      <a href="index.html#diagnostic" class="btn p">Faire mon diagnostic gratuit</a>
+    </div>
+  </div>
+</article>
+
+<section class="gris">
+  <div class="w">
+    <div class="ctr" style="margin-bottom:28px">
+      <p class="eyebrow">Pour aller plus loin</p>
+      <h2>À lire ensuite</h2>
+    </div>
+    <div class="art-grille">
+      <a class="art-carte" href="ai-act-entreprise-concernee.html">
+        <span class="art-cat">Les bases</span>
+        <span class="art-titre">AI Act : mon entreprise est-elle concernée ?</span>
+        <span class="art-res">Aucun seuil d'effectif, aucun seuil de chiffre d'affaires. Ce qui déclenche vos obligations au titre du règlement européen sur l'IA, et ce qui ne les déclenche pas.</span>
+        <span class="art-meta">7 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+<a class="art-carte" href="mentions-ia-site-web.html">
+        <span class="art-cat">Mise en pratique</span>
+        <span class="art-titre">Quelles mentions IA faut-il afficher sur son site web ?</span>
+        <span class="art-res">Chatbot, contenus générés, page dédiée, pied de page : où placer les mentions d'utilisation de l'IA sur votre site, et comment les rédiger.</span>
+        <span class="art-meta">6 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+<a class="art-carte" href="signaler-contenus-ia-reseaux-sociaux.html">
+        <span class="art-cat">Mise en pratique</span>
+        <span class="art-titre">Faut-il signaler les contenus générés par IA sur les réseaux sociaux ?</span>
+        <span class="art-res">Visuels générés, voix de synthèse, vidéos retouchées : ce qui doit être signalé sur LinkedIn, Instagram ou TikTok, et ce qui échappe à l'obligation.</span>
+        <span class="art-meta">5 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+    </div>
+    <p class="ctr" style="margin-top:28px"><a href="articles.html" class="lien-fort">Voir tous les articles</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="w">
+    <div class="pg">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:14px">
+      <svg class="logo-mark" viewBox="0 0 30 38" aria-hidden="true">
+        <rect x="2" y="2" width="24" height="34" rx="3" fill="#741424"/>
+        <rect x="4.5" y="4.5" width="19" height="29" rx="2" fill="none" stroke="#C9962B" stroke-width="1"/>
+        <circle cx="14" cy="16" r="5" fill="none" stroke="#C9962B" stroke-width="1.4"/>
+        <circle cx="12" cy="16" r="1.1" fill="#C9962B"/><circle cx="16" cy="16" r="1.1" fill="#C9962B"/>
+        <path d="M11 10.5v-2M17 10.5v-2" stroke="#C9962B" stroke-width="1.2" stroke-linecap="round"/>
+        <rect x="9" y="25" width="10" height="4" rx="1" fill="none" stroke="#C9962B" stroke-width="1.1"/>
+        <circle cx="14" cy="27" r="1" fill="#C9962B"/>
+        <path d="M26 6v28" stroke="#741424" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-txt">
+        <span class="logo-bar b"></span>
+        <span class="logo-nom"><span class="p">PASSEPORT</span> <span class="i">IA</span></span>
+        <span class="logo-bar r"></span>
+      </span>
+        </a>
+        <p style="font-size:14px;color:var(--gris-txt);max-width:250px">La mise en conformité IA des TPE et PME françaises, en français et sans jargon.</p>
+      </div>
+      <div>
+        <h4>Nos offres</h4>
+        <a href="index.html#diagnostic">Diagnostic gratuit</a>
+        <a href="index.html#offres">Pack Starter</a>
+        <a href="index.html#offres">Pack Conformité</a>
+        <a href="index.html#offres">Passeport complet</a>
+        <a href="index.html#offres">Formation Article 4</a>
+      </div>
+      <div>
+        <h4>Comprendre</h4>
+        <a href="articles.html">Tous les articles</a>
+        <a href="index.html#concerne">Suis-je concerné ?</a>
+        <a href="index.html#dates">Les vraies dates</a>
+        <a href="https://artificialintelligenceact.eu/fr/" target="_blank" rel="noopener">Le texte du règlement</a>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+        <a href="cgv.html">Conditions générales de vente</a>
+        <a href="mailto:contact@passeport-ia.fr">contact@passeport-ia.fr</a>
+      </div>
+    </div>
+    <div class="mentions">
+      <p class="badge-ia">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>
+        Certains contenus de ce site ont été rédigés avec l'assistance d'une intelligence artificielle, relus et validés par nos équipes.
+      </p>
+      <p><strong>Passeport IA</strong> fournit des modèles opérationnels et un accompagnement de mise en place. Nos articles ont une vocation d'information générale et ne constituent pas une consultation juridique.</p>
+      <p style="margin-top:10px">Passeport IA est une initiative indépendante, sans lien avec les services de l'État ni avec aucune autorité publique.</p>
+      <p style="margin-top:16px">© 2026 Passeport IA</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

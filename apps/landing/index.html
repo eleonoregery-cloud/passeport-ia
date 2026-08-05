@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Passeport IA : mettez votre entreprise en règle avec l'IA</title>
+<meta name="description" content="Depuis le 2 août 2026, la CNIL peut sanctionner les entreprises qui utilisent l'IA sans respecter les obligations de transparence. Diagnostic gratuit en 5 minutes.">
+<meta property="og:title" content="Passeport IA : mettez votre entreprise en règle avec l'IA">
+<meta property="og:description" content="Diagnostic de conformité AI Act gratuit. Score, priorités et exposition financière en 5 minutes.">
+<meta property="og:image" content="logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ---- styles propres à la page d'accueil ---- */
+.hero{background:var(--bleu-tres-pale);border-bottom:1px solid var(--bord);padding:70px 0 64px}
+.hero-g{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media(max-width:940px){.hero-g{grid-template-columns:1fr;gap:36px}}
+.alerte{display:inline-flex;align-items:center;gap:9px;background:var(--rouge-pale);color:var(--rouge-txt);font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:20px;margin-bottom:20px}
+.alerte .pt{width:8px;height:8px;border-radius:50%;background:var(--rouge);flex-shrink:0}
+.hero h1{margin-bottom:18px}
+.hero .lead{font-size:18.5px;margin-bottom:28px}
+.hcta{display:flex;flex-wrap:wrap;gap:13px;margin-bottom:14px}
+.hnote{font-size:14px;color:var(--gris-doux)}
+/* aperçu du rapport dans l'accroche */
+.rapport{background:var(--blanc);border:1px solid var(--bord);border-top:4px solid var(--bleu);border-radius:var(--r-l);padding:24px;max-width:400px;margin:0 auto}
+.rapport-tete{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--bord);margin-bottom:18px}
+.rapport-eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--gris-doux)}
+.rapport-titre{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-top:2px}
+.rapport-ref{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;color:var(--gris-doux);white-space:nowrap;padding-top:3px}
+.rapport-score{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.jauge{position:relative;width:82px;height:82px;flex-shrink:0}
+.jauge-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;letter-spacing:-.02em;color:var(--noir)}
+.niveau{font-size:15.5px;font-weight:600;color:var(--rouge-txt)}
+.niveau-txt{font-size:13.5px;color:var(--gris-txt);line-height:1.45;margin-top:2px}
+.rapport-bloc{margin-bottom:18px}
+.rapport-lab{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:9px}
+.prio{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--noir);margin-bottom:8px;line-height:1.4}
+.prio span{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--bleu-pale);color:var(--bleu);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rapport-expo{background:var(--fond);border-radius:var(--r);padding:14px 16px}
+.expo-lab{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:3px}
+.expo-val{font-size:26px;font-weight:700;letter-spacing:-.025em;color:var(--noir);line-height:1.15}
+.expo-src{font-size:11.5px;color:var(--gris-doux);line-height:1.4;margin-top:3px}
+
+.faits{background:var(--bleu);padding:34px 0}
+.faits .f-n{font-size:29px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--blanc)}
+.faits .f-l{font-size:14px;line-height:1.5;margin-top:5px;color:#DCE7F7}
+
+.cl{list-style:none}
+.cl li{position:relative;padding-left:32px;margin-bottom:13px;font-size:15.5px}
+.cl li::before{content:"";position:absolute;left:0;top:5px;width:18px;height:18px;border:2px solid var(--rouge);border-radius:4px}
+.cl li::after{content:"";position:absolute;left:5px;top:9px;width:6px;height:10px;border:solid var(--rouge);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+
+.simu{background:var(--blanc);border:1px solid var(--bord);border-radius:var(--r-l);padding:40px}
+.simu-cadre{margin-top:26px;border:1px solid var(--bord);border-radius:var(--r);overflow:hidden;background:var(--blanc);min-height:640px}
+.simu-frame{width:100%;height:820px;border:0;display:block;opacity:0;transition:opacity .3s}
+@media(max-width:760px){.simu-frame{height:900px}}
+.slot{background:var(--bleu-tres-pale);border:2px dashed var(--bleu);border-radius:var(--r);padding:56px 24px;color:var(--gris-txt);font-size:15px;text-align:center}
+.slot code{background:var(--blanc);border:1px solid var(--bord);padding:2px 7px;border-radius:4px;font-size:13.5px}
+.simu-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.st{background:var(--fond);border-radius:20px;padding:7px 15px;font-size:13.5px;color:var(--gris-txt)}
+
+.et{width:38px;height:38px;border-radius:50%;background:var(--bleu);color:var(--blanc);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;margin-bottom:14px}
+
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:20px;align-items:stretch}
+.pk{background:var(--blanc);border:1px solid var(--bord);border-radius:var(--r-l);display:flex;flex-direction:column;overflow:hidden}
+.pk.phare{border:2px solid var(--bleu)}
+.rb{background:var(--bleu);color:var(--blanc);text-align:center;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:9px}
+.pk-c{padding:28px;display:flex;flex-direction:column;flex:1}
+.pk-n{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:11px}
+.pk-a{font-size:14.5px;color:var(--gris-txt);min-height:46px;margin-bottom:20px}
+.pk-p{font-size:38px;font-weight:700;letter-spacing:-.03em}
+.pk-u{font-size:15px;color:var(--gris-txt);font-weight:500}
+.pk-m{font-size:13.5px;color:var(--gris-doux);margin:2px 0 22px}
+.pk ul{list-style:none;flex:1;margin-bottom:22px}
+.pk li{position:relative;padding-left:27px;font-size:14.5px;margin-bottom:10px}
+.pk li::before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;background:var(--vert-pale);border-radius:50%}
+.pk li::after{content:"";position:absolute;left:5px;top:10px;width:5px;height:8px;border:solid var(--vert);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pk li.inc{font-weight:600}
+
+.fo{background:var(--blanc);border:1px solid var(--bord);border-top:4px solid var(--vert);border-radius:var(--r-l);padding:32px;margin-top:22px}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 13px;border-radius:20px}
+.tag.v{background:var(--vert-pale);color:var(--vert-txt)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:13px;margin:22px 0}
+.stat{background:var(--fond);border-radius:var(--r);padding:16px 18px}
+.stat.ok{background:var(--vert-pale)}
+.s-l{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:3px}
+.stat.ok .s-l{color:var(--vert-txt)}
+.s-v{font-size:25px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--noir)}
+.stat.ok .s-v{color:var(--vert-txt)}
+.s-d{font-size:13px;color:var(--gris-txt);margin-top:3px;line-height:1.45}
+.stat.ok .s-d{color:var(--vert-txt)}
+
+.fx{background:var(--rouge-pale);border-radius:var(--r);padding:22px}
+.vr{background:var(--vert-pale);border-radius:var(--r);padding:22px}
+.fx h4,.vr h4{font-size:12.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:9px}
+.fx h4{color:var(--rouge-txt)} .vr h4{color:var(--vert-txt)}
+.fx p{font-size:15px;color:var(--rouge-txt)} .vr p{font-size:15px;color:var(--vert-txt)}
+.frise{border-left:2px solid var(--bord);padding-left:26px;margin-top:10px}
+.jl{position:relative;padding-bottom:26px}
+.jl::before{content:"";position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bord);border:2px solid var(--blanc)}
+.jl.a::before{background:var(--rouge)} .jl.p::before{background:var(--ambre)}
+.jl-d{font-size:15px;font-weight:600;margin-bottom:2px}
+.jl-t{font-size:14.5px;color:var(--gris-txt)}
+
+details{border-bottom:1px solid var(--bord);padding:18px 0}
+summary{font-size:16.5px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--noir)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;font-weight:400;color:var(--bleu);flex-shrink:0;line-height:1}
+details[open] summary::after{content:"−"}
+details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px}
+
+.fin{background:var(--bleu);border-radius:var(--r-l);padding:54px 36px;text-align:center}
+.fin h2{color:var(--blanc)}
+.fin p{font-size:17px;color:#DCE7F7;max-width:600px;margin:0 auto 28px}
+</style>
+</head>
+<body>
+
+<!-- ============ EN-TÊTE ============ -->
+<header>
+  <div class="w bar">
+    <a href="index.html" class="logo" aria-label="Passeport IA, retour à l'accueil">
+      <svg class="logo-mark" viewBox="0 0 30 38" aria-hidden="true">
+        <rect x="2" y="2" width="24" height="34" rx="3" fill="#741424"/>
+        <rect x="4.5" y="4.5" width="19" height="29" rx="2" fill="none" stroke="#C9962B" stroke-width="1"/>
+        <circle cx="14" cy="16" r="5" fill="none" stroke="#C9962B" stroke-width="1.4"/>
+        <circle cx="12" cy="16" r="1.1" fill="#C9962B"/><circle cx="16" cy="16" r="1.1" fill="#C9962B"/>
+        <path d="M11 10.5v-2M17 10.5v-2" stroke="#C9962B" stroke-width="1.2" stroke-linecap="round"/>
+        <rect x="9" y="25" width="10" height="4" rx="1" fill="none" stroke="#C9962B" stroke-width="1.1"/>
+        <circle cx="14" cy="27" r="1" fill="#C9962B"/>
+        <path d="M26 6v28" stroke="#741424" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-txt">
+        <span class="logo-bar b"></span>
+        <span class="logo-nom"><span class="p">PASSEPORT</span> <span class="i">IA</span></span>
+        <span class="logo-bar r"></span>
+      </span>
+    </a>
+    <nav>
+      <a href="#concerne" class="n">Suis-je concerné ?</a>
+      <a href="#offres" class="n">Nos offres</a>
+      <a href="#dates" class="n">Les vraies dates</a>
+      <a href="articles.html" class="n">Articles</a>
+      <a href="#diagnostic" class="btn p sm">Diagnostic gratuit</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ ACCROCHE ============ -->
+<div class="hero">
+  <div class="w hero-g">
+    <div>
+      <p class="alerte"><span class="pt"></span> Depuis le 2 août 2026, la CNIL peut sanctionner</p>
+      <h1>Votre entreprise utilise l'IA. Elle a des obligations.</h1>
+      <p class="lead">Chatbot, contenus générés, salariés qui utilisent ChatGPT : le règlement européen vous concerne probablement déjà. En 5 minutes, découvrez où vous en êtes et ce que vous risquez réellement.</p>
+      <div class="hcta">
+        <a href="#diagnostic" class="btn p">Faire mon diagnostic gratuit</a>
+        <a href="#offres" class="btn">Voir les offres</a>
+      </div>
+      <p class="hnote">25 questions · 5 minutes · sans engagement · aucune carte bancaire</p>
+    </div>
+    <!-- Aperçu du rapport : montre le produit et renforce le caractère officiel -->
+    <div class="rapport" aria-label="Exemple de rapport de diagnostic">
+      <div class="rapport-tete">
+        <div>
+          <p class="rapport-eyebrow">Exemple de rapport</p>
+          <p class="rapport-titre">Diagnostic de conformité</p>
+        </div>
+        <span class="rapport-ref">RÉF. 2026-0142</span>
+      </div>
+
+      <div class="rapport-score">
+        <div class="jauge" role="img" aria-label="Score de 38 sur 100">
+          <svg viewBox="0 0 100 100" width="82" height="82">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#EDEDEB" stroke-width="11"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#E30613" stroke-width="11"
+                    stroke-dasharray="100 164" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          </svg>
+          <span class="jauge-val">38</span>
+        </div>
+        <div>
+          <p class="niveau">Exposition critique</p>
+          <p class="niveau-txt">Votre entreprise utilise l'IA sans cadre de conformité.</p>
+        </div>
+      </div>
+
+      <div class="rapport-bloc">
+        <p class="rapport-lab">Vos 3 priorités</p>
+        <p class="prio"><span>1</span>Former vos salariés à l'usage de l'IA</p>
+        <p class="prio"><span>2</span>Signaler vos visuels et vidéos générés</p>
+        <p class="prio"><span>3</span>Encadrer l'usage de l'IA par une charte</p>
+      </div>
+
+      <div class="rapport-expo">
+        <p class="expo-lab">Exposition maximale en cas de contrôle</p>
+        <p class="expo-val">150 000 €</p>
+        <p class="expo-src">Plafond de sanction des manquements à l'article 50, prévu à l'article 99 du règlement (UE) 2024/1689, soit 3 % du chiffre d'affaires</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FAITS ============ -->
+<div class="faits">
+  <div class="w g g4">
+    <div><p class="f-n">3 %</p><p class="f-l">du chiffre d'affaires mondial, le plafond d'amende sur les obligations de transparence de l'article 50</p></div>
+    <div><p class="f-n">Février 2025</p><p class="f-l">l'obligation de former ses salariés à l'IA est en vigueur depuis cette date</p></div>
+    <div><p class="f-n">2 déc. 2026</p><p class="f-l">fin du délai pour marquer les contenus IA publiés avant le 2 août</p></div>
+    <div><p class="f-n">Aucun seuil</p><p class="f-l">une entreprise de 5 salariés est concernée comme un grand groupe</p></div>
+  </div>
+</div>
+
+<!-- ============ CONCERNÉ ============ -->
+<section id="concerne">
+  <div class="w">
+    <p class="eyebrow">Le périmètre</p>
+    <h2>Êtes-vous concerné ?</h2>
+    <p class="lead" style="margin-bottom:34px">Si une seule de ces situations vous correspond, le règlement s'applique à votre entreprise.</p>
+    <div class="g g2">
+      <ul class="cl">
+        <li>Vos salariés utilisent ChatGPT, Copilot ou Gemini au travail</li>
+        <li>Vous publiez des visuels ou des vidéos générés par intelligence artificielle</li>
+        <li>Vos vidéos ou podcasts utilisent une voix de synthèse ou un avatar</li>
+        <li>Vous avez un chatbot personnalisé à vos couleurs sur votre site</li>
+      </ul>
+      <ul class="cl">
+        <li>Vous triez des candidatures ou évaluez des personnes avec un outil automatisé</li>
+        <li>Vous publiez des contenus d'information rédigés par IA sans relecture</li>
+        <li>Vous n'avez pas de charte écrite encadrant l'usage de l'IA</li>
+        <li>Vous ne tenez pas de registre de vos outils d'IA</li>
+      </ul>
+    </div>
+
+    <div class="g g2" style="margin-top:34px">
+      <div class="card pl">
+        <p class="eyebrow">Article 50</p>
+        <h3>La transparence</h3>
+        <p class="txt-doux" style="font-size:15px">Signaler les images, vidéos et voix générées par IA que vous publiez. Cette obligation vous incombe directement en tant qu'utilisateur du système. Applicable depuis le 2 août 2026.</p>
+      </div>
+      <div class="card pl">
+        <p class="eyebrow">Article 4</p>
+        <h3>La formation</h3>
+        <p class="txt-doux" style="font-size:15px">Garantir que vos salariés savent utiliser l'IA en connaissance de cause. Le texte vise explicitement les entreprises utilisatrices. En vigueur depuis février 2025, sans seuil d'effectif.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIMULATEUR ============ -->
+<section id="diagnostic" class="gris">
+  <div class="w">
+    <div class="simu">
+      <div class="ctr">
+        <span class="tag v">Gratuit et sans engagement</span>
+        <h2 style="margin-top:16px">Votre diagnostic de conformité</h2>
+        <p class="lead ctr">25 questions en langage clair. À la fin, vous obtenez votre score, vos trois priorités et le calcul de votre exposition financière en cas de contrôle.</p>
+      </div>
+
+      <!-- ═══════════════ LE SIMULATEUR ═══════════════
+           L'adresse à charger se règle sur la ligne "src" ci-dessous.
+           Tant que la page /diagnostic n'existe pas, le message de secours s'affiche.
+           ══════════════════════════════════════════════ -->
+      <div class="simu-cadre">
+        <iframe
+          id="simulateur"
+          class="simu-frame"
+          src="/diagnostic"
+          title="Diagnostic de conformité AI Act"
+          loading="lazy"
+          onload="this.style.opacity=1"
+          onerror="document.getElementById('simu-secours').style.display='block'"></iframe>
+
+        <div id="simu-secours" class="slot" style="display:none">
+          <strong style="display:block;color:var(--bleu);font-size:16px;margin-bottom:8px">Le simulateur n'est pas encore relié</strong>
+          Vérifier l'adresse indiquée dans l'attribut <code>src</code> de l'élément iframe, dans <code>index.html</code>.
+        </div>
+      </div>
+
+      <div class="simu-tags">
+        <span class="st">Score sur 100</span>
+        <span class="st">Vos 3 priorités</span>
+        <span class="st">Les articles concernés</span>
+        <span class="st">Votre exposition chiffrée</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÉTAPES ============ -->
+<section>
+  <div class="w">
+    <div class="ctr" style="margin-bottom:38px">
+      <p class="eyebrow">Le parcours</p>
+      <h2>Comment ça se passe</h2>
+      <p class="lead">Trois étapes, aucune démarche administrative de votre côté.</p>
+    </div>
+    <div class="g g3">
+      <div class="card">
+        <p class="et">1</p>
+        <h3>Vous faites le diagnostic</h3>
+        <p class="txt-doux" style="font-size:15px">25 questions, 5 minutes. Vous saurez quelles obligations pèsent réellement sur vous, avec votre score, vos trois priorités et votre exposition chiffrée. Gratuit, sans rendez-vous commercial derrière.</p>
+      </div>
+      <div class="card">
+        <p class="et">2</p>
+        <h3>On prépare vos documents</h3>
+        <p class="txt-doux" style="font-size:15px">Mentions, registre, procédure et charte, adaptés à votre activité. Livrés sous 48 heures, puis passés en revue avec un conseiller juridique.</p>
+      </div>
+      <div class="card">
+        <p class="et">3</p>
+        <h3>Vous êtes en règle</h3>
+        <p class="txt-doux" style="font-size:15px">Vous avez de quoi répondre à un contrôle. Et si vous le souhaitez, un label à afficher pour que vos clients le voient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFFRES ============ -->
+<section id="offres" class="gris">
+  <div class="w">
+    <div class="ctr" style="margin-bottom:38px">
+      <p class="eyebrow">Nos offres</p>
+      <h2>Trois façons de vous mettre en règle</h2>
+      <p class="lead">Chaque offre contient la précédente. Vous montez en gamme sans jamais racheter ce que vous avez déjà.</p>
+    </div>
+
+    <div class="packs">
+      <div class="pk">
+        <div class="pk-c">
+          <p class="pk-n">Pack 1</p>
+          <h3>Starter</h3>
+          <p class="pk-a">Vous ne savez pas où vous en êtes. On vous le dit noir sur blanc.</p>
+          <p><span class="pk-p">99 €</span> <span class="pk-u">HT</span></p>
+          <p class="pk-m">Une fois · livré sous 24h</p>
+          <ul>
+            <li>Rapport personnalisé de 4 pages</li>
+            <li>Les extraits de loi qui vous concernent</li>
+            <li>Le calcul détaillé de votre exposition</li>
+            <li>Une mention IA prête à coller</li>
+            <li>Le guide « Vos obligations en clair »</li>
+          </ul>
+          <a href="mailto:contact@passeport-ia.fr?subject=Pack%20Starter%20-%20demande%20d'information" class="btn bl">Choisir Starter</a>
+        </div>
+      </div>
+
+      <div class="pk phare">
+        <p class="rb">Le plus demandé</p>
+        <div class="pk-c">
+          <p class="pk-n">Pack 2</p>
+          <h3>Conformité Article 50</h3>
+          <p class="pk-a">Votre site, vos contenus et votre équipe en règle. En 48 heures.</p>
+          <p><span class="pk-p">490 €</span> <span class="pk-u">HT</span></p>
+          <p class="pk-m">Une fois · c'est réglé</p>
+          <ul>
+            <li class="inc">Tout le pack Starter</li>
+            <li>Mentions IA pour l'ensemble de votre site</li>
+            <li>Notice chatbot prête à intégrer</li>
+            <li>Votre registre des usages IA</li>
+            <li>Procédure de marquage des contenus</li>
+            <li>Charte d'usage pour vos salariés</li>
+            <li>45 min en visio avec un conseiller juridique</li>
+          </ul>
+          <a href="mailto:contact@passeport-ia.fr?subject=Pack%20Conformite%20Article%2050%20-%20demande%20d'information" class="btn p bl">Choisir Conformité</a>
+        </div>
+      </div>
+
+      <div class="pk">
+        <div class="pk-c">
+          <p class="pk-n">Pack 3</p>
+          <h3>Passeport complet</h3>
+          <p class="pk-a">Vous êtes en règle, et vos clients peuvent le vérifier.</p>
+          <p><span class="pk-p">780 €</span> <span class="pk-u">HT</span></p>
+          <p class="pk-m">1<sup>re</sup> année, puis 290 € HT/an</p>
+          <ul>
+            <li class="inc">Tout le pack Conformité</li>
+            <li>Label « IA Transparente » pendant 12 mois</li>
+            <li>Page de vérification publique à votre nom</li>
+            <li>Vérification annuelle de votre conformité</li>
+          </ul>
+          <a href="mailto:contact@passeport-ia.fr?subject=Passeport%20complet%20-%20demande%20d'information" class="btn bl">Choisir Passeport</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fo">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:10px">
+        <span class="tag v">Obligation Article 4</span>
+        <span style="font-size:13.5px;color:var(--gris-doux)">Offre complémentaire, indépendante des packs</span>
+      </div>
+      <h3 style="font-size:24px">Formation « Sensibilisation à l'usage de l'IA »</h3>
+      <p class="txt-doux" style="font-size:15.5px;max-width:730px">Depuis février 2025, toute entreprise qui utilise de l'IA doit garantir que ses salariés savent s'en servir en connaissance de cause. Sans seuil d'effectif. Si vos équipes utilisent ChatGPT, vous êtes concerné.</p>
+
+      <div class="stats">
+        <div class="stat"><p class="s-l">Tarif</p><p class="s-v">510 € <span style="font-size:14px;font-weight:500;color:var(--gris-txt)">HT</span></p><p class="s-d">Par participant, inscription à l'unité possible</p></div>
+        <div class="stat"><p class="s-l">Durée</p><p class="s-v">1 jour</p><p class="s-d">7 heures, 100 % en ligne</p></div>
+        <div class="stat"><p class="s-l">Session</p><p class="s-v">8 à 10</p><p class="s-d">Participants</p></div>
+        <div class="stat"><p class="s-l">Délai</p><p class="s-v">3 à 6 <span style="font-size:15px;font-weight:500">sem.</span></p><p class="s-d">Dossier OPCO à déposer avant le démarrage</p></div>
+      </div>
+
+      <div class="g g3" style="margin-bottom:24px">
+        <div>
+          <h4>Vous inscrivez qui vous voulez</h4>
+          <p class="txt-doux" style="font-size:14.5px">Même une seule personne. Les sessions regroupent des participants de plusieurs entreprises, vous n'avez pas de groupe à constituer.</p>
+        </div>
+        <div>
+          <h4>Le financement</h4>
+          <p class="txt-doux" style="font-size:14.5px">Formation éligible à une prise en charge par votre OPCO. Le montant dépend de votre branche et de votre effectif. Nous vérifions votre taux et montons le dossier.</p>
+        </div>
+        <div>
+          <h4>À la fin</h4>
+          <p class="txt-doux" style="font-size:14.5px">Une attestation de sensibilisation, à présenter en cas de contrôle.</p>
+        </div>
+      </div>
+
+      <a href="mailto:contact@passeport-ia.fr?subject=Formation%20Article%204%20-%20eligibilite%20au%20financement" class="btn">Vérifier mon éligibilité au financement</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VRAIES DATES ============ -->
+<section id="dates">
+  <div class="w">
+    <p class="eyebrow">Mise au point</p>
+    <h2>Les vraies dates, les vrais montants</h2>
+    <p class="lead" style="margin-bottom:34px">Beaucoup d'informations qui circulent sur ce règlement sont fausses. Voici ce que dit réellement le texte.</p>
+
+    <div class="g g2" style="margin-bottom:40px">
+      <div class="fx">
+        <h4>Ce qu'on lit partout</h4>
+        <p>« L'AI Act, c'est 35 millions d'euros d'amende ou 7 % du chiffre d'affaires. Et les obligations sur les systèmes à haut risque sont entrées en vigueur le 2 août 2026. »</p>
+      </div>
+      <div class="vr">
+        <h4>Ce que dit le texte</h4>
+        <p>Les 35 millions concernent uniquement les pratiques interdites, comme la notation sociale. Sur la transparence, le plafond est de 15 millions ou 3 % du chiffre d'affaires, et pour une PME c'est le montant le plus bas qui s'applique. Le haut risque, lui, est reporté à décembre 2027.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:20px">Le calendrier réel</h3>
+    <div class="frise">
+      <div class="jl a">
+        <p class="jl-d">2 février 2025, déjà en vigueur</p>
+        <p class="jl-t">Obligation de former ses salariés à l'usage de l'IA. Sans seuil d'effectif. La plupart des entreprises françaises ne l'appliquent pas.</p>
+      </div>
+      <div class="jl a">
+        <p class="jl-d">2 août 2026, c'est passé</p>
+        <p class="jl-t">Obligations de transparence applicables, et surtout, la CNIL récupère son pouvoir de sanction. C'est le vrai basculement.</p>
+      </div>
+      <div class="jl p">
+        <p class="jl-d">2 décembre 2026, dans quelques mois</p>
+        <p class="jl-t">Fin du délai de grâce pour marquer les contenus générés par IA publiés avant le 2 août.</p>
+      </div>
+      <div class="jl">
+        <p class="jl-d">2 décembre 2027</p>
+        <p class="jl-t">Obligations renforcées sur les systèmes à haut risque, reportées par le Digital Omnibus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TÉMOIGNAGES ============
+     Section retirée tant qu'aucun client n'a accepté d'être cité.
+     Une section vide signale l'absence de clients, c'est pire que pas de section.
+     Pour la réactiver, coller ce bloc entre la section des dates et la FAQ :
+
+<section class="gris">
+  <div class="w">
+    <div class="ctr" style="margin-bottom:30px">
+      <p class="eyebrow">Retours clients</p>
+      <h2>Ils nous font confiance</h2>
+    </div>
+    <div class="g g2">
+      <div class="card">
+        <p style="font-size:16px;margin-bottom:14px">« Citation exacte du client. »</p>
+        <p style="font-size:14px;color:var(--gris-doux)">Prénom N., Fonction, Entreprise</p>
+      </div>
+      <div class="card">
+        <p style="font-size:16px;margin-bottom:14px">« Citation exacte du client. »</p>
+        <p style="font-size:14px;color:var(--gris-doux)">Prénom N., Fonction, Entreprise</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+     ⚠️ Ne jamais inventer un témoignage. C'est une pratique commerciale trompeuse.
+============================================ -->
+
+<!-- ============ FAQ ============ -->
+<section class="gris">
+  <div class="w-etroit">
+    <p class="eyebrow">Questions fréquentes</p>
+    <h2 style="margin-bottom:26px">Ce qu'on nous demande le plus</h2>
+
+    <details open>
+      <summary>Je suis une toute petite structure, suis-je vraiment concerné ?</summary>
+      <p>Oui. L'obligation de formation de l'article 4 s'applique sans aucun seuil d'effectif, et le texte vise explicitement les entreprises utilisatrices. Cinq personnes qui rédigent des devis avec ChatGPT suffisent. Si vous publiez en plus des visuels ou des vidéos générés par IA, l'article 50 s'applique également.</p>
+    </details>
+
+    <details>
+      <summary>Je ne risque pas 35 millions d'euros, si ?</summary>
+      <p>Non. Les 35 millions concernent les pratiques interdites, comme la notation sociale ou la manipulation comportementale. Sur les obligations de transparence, le plafond est de 15 millions ou 3 % du chiffre d'affaires mondial, et pour une PME c'est le montant le plus bas qui s'applique. Pour une entreprise à 5 millions de chiffre d'affaires, l'exposition réelle est de 150 000 euros.</p>
+    </details>
+
+    <details>
+      <summary>Ce n'est pas à mon prestataire de gérer ça ?</summary>
+      <p>Cela dépend de l'obligation. Le règlement distingue le fournisseur, qui développe le système, et le déployeur, qui l'utilise. Le marquage technique des contenus générés relève du fournisseur du modèle. En revanche, trois obligations vous incombent directement : former vos salariés au titre de l'article 4, signaler les images, vidéos et voix générées que vous publiez au titre de l'article 50(4), et informer les personnes exposées à un système de reconnaissance des émotions au titre de l'article 50(3). Et dès que votre chatbot porte votre marque et vos réponses, l'article 25 vous place en position de fournisseur.</p>
+    </details>
+
+    <details>
+      <summary>Mes fiches produit rédigées avec ChatGPT doivent-elles porter une mention ?</summary>
+      <p>Pas nécessairement. L'article 50(4) vise les textes publiés pour informer le public sur des questions d'intérêt public, et il ne s'applique pas lorsque le contenu a fait l'objet d'un contrôle éditorial humain. Une fiche produit relue par votre équipe n'entre donc pas dans le champ de cette obligation. Le diagnostic vous dit précisément lesquels de vos contenus sont concernés et lesquels ne le sont pas.</p>
+    </details>
+
+    <details>
+      <summary>Vous êtes juristes ?</summary>
+      <p>Non. Nous fournissons des modèles opérationnels et un accompagnement de mise en place. L'entretien de 45 minutes se tient avec un conseiller juridique, mais il ne constitue pas une consultation juridique formelle. Nos documents sont à faire valider par votre avocat si vous souhaitez une garantie contractuelle.</p>
+    </details>
+
+    <details>
+      <summary>Comment fonctionne le financement de la formation ?</summary>
+      <p>La formation est dispensée par notre organisme de formation partenaire certifié, ce qui la rend éligible à une prise en charge par votre OPCO. Le montant couvert dépend de votre branche professionnelle et de votre effectif. Nous vérifions votre taux exact avant tout engagement et nous montons le dossier à votre place, pour que vous sachiez précisément ce qui restera à votre charge.</p>
+    </details>
+
+    <details>
+      <summary>Pourquoi la formation n'est-elle pas financée intégralement ?</summary>
+      <p>Les OPCO plafonnent leur prise en charge en euros par heure et par salarié, généralement entre 15 et 40 euros de l'heure selon la branche. Les prix du marché de la formation ont augmenté plus vite que ces plafonds. C'est un décalage structurel qui touche tous les organismes. À titre de comparaison, une journée de formation en inter-entreprises se situe entre 350 et 800 euros par participant sur le marché français. Nous sommes à 510 euros.</p>
+    </details>
+
+    <details>
+      <summary>Je n'ai que deux salariés à former, c'est possible ?</summary>
+      <p>Oui, et c'est l'intérêt du format. Les sessions regroupent des participants venus de plusieurs entreprises. Vous inscrivez le nombre de personnes que vous voulez, même une seule, et elles rejoignent une session avec d'autres participants. Une session s'ouvre à partir de huit inscrits et accueille dix personnes au maximum.</p>
+    </details>
+
+    <details>
+      <summary>Pourquoi un délai de 3 à 6 semaines pour la formation ?</summary>
+      <p>Le dossier de financement doit être déposé avant le démarrage de la formation, et l'OPCO met deux à quatre semaines à notifier sa décision. Il n'existe aucun financement rétroactif. C'est le seul délai que nous ne pouvons pas raccourcir.</p>
+    </details>
+
+    <details>
+      <summary>Votre label, quelle valeur a-t-il ?</summary>
+      <p>C'est un label privé que nous délivrons, et nous l'assumons comme tel. Il atteste que vous avez mis en place les mentions, le registre et la charte prévus par le règlement, avec une page de vérification publique à votre nom. Il n'existe aujourd'hui aucun label officiel destiné aux entreprises utilisatrices d'IA. Le marquage CE, lui, est réservé aux fournisseurs de systèmes à haut risque.</p>
+    </details>
+
+    <details>
+      <summary>Je n'ai pas le temps.</summary>
+      <p>Le diagnostic prend cinq minutes. Ensuite, comptez quarante-cinq minutes pour l'entretien de mise en main, et le temps d'intégrer les mentions sur votre site. Vous n'avez rien à rédiger, tout est livré prêt à l'emploi.</p>
+    </details>
+
+    <details>
+      <summary>Est-ce que je risque vraiment un contrôle ?</summary>
+      <p>Nous ne le savons pas, et personne ne peut vous le promettre. Ce que nous savons, c'est que la CNIL dispose depuis le 2 août 2026 du pouvoir de sanctionner, qu'elle peut vérifier ces points lors d'un contrôle déclenché pour une autre raison, et que de plus en plus de donneurs d'ordre demandent ces éléments en appel d'offres.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ ARTICLES, RÉFÉRENCEMENT ============ -->
+<section id="articles" class="gris">
+  <div class="w">
+    <div class="ctr" style="margin-bottom:32px">
+      <p class="eyebrow">Ressources</p>
+      <h2>Comprendre avant de décider</h2>
+      <p class="lead" style="max-width:620px;margin:12px auto 0">Des réponses courtes et vérifiées, avec la référence de l'article du règlement à chaque fois. Y compris sur ce qui ne vous concerne pas.</p>
+    </div>
+    <div class="art-grille">
+      <a class="art-carte" href="ai-act-entreprise-concernee.html">
+        <span class="art-cat">Les bases</span>
+        <span class="art-titre">AI Act : mon entreprise est-elle concernée ?</span>
+        <span class="art-res">Aucun seuil d'effectif, aucun seuil de chiffre d'affaires. Ce qui déclenche vos obligations au titre du règlement européen sur l'IA, et ce qui ne les déclenche pas.</span>
+        <span class="art-meta">7 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+      <a class="art-carte" href="fournisseur-ou-deployeur-ia.html">
+        <span class="art-cat">Comprendre le texte</span>
+        <span class="art-titre">Fournisseur ou déployeur d'IA : comment savoir de quel côté vous êtes</span>
+        <span class="art-res">L'article 50 ne répartit pas les mêmes obligations entre le fournisseur d'un système d'IA et celui qui l'utilise. Décryptage de la distinction, et du piège de l'article 25.</span>
+        <span class="art-meta">8 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+      <a class="art-carte" href="sanctions-ai-act-pme.html">
+        <span class="art-cat">Risques et sanctions</span>
+        <span class="art-titre">AI Act : quelles sanctions pour une PME en 2026 ?</span>
+        <span class="art-res">35 millions d'euros, 15 millions, 3 % du chiffre d'affaires : les chiffres circulent sans leur contexte. Ce qu'une PME risque réellement, article par article.</span>
+        <span class="art-meta">6 min de lecture<span class="art-fl" aria-hidden="true">&rsaquo;</span></span>
+      </a>
+    </div>
+    <p class="ctr" style="margin-top:30px"><a href="articles.html" class="lien-fort">Voir les 8 articles</a></p>
+  </div>
+</section>
+
+<!-- ============ APPEL FINAL ============ -->
+<section id="contact" style="padding-top:0">
+  <div class="w">
+    <div class="fin">
+      <h2>Commencez par savoir où vous en êtes</h2>
+      <p>Cinq minutes pour connaître votre niveau de conformité, vos trois priorités et votre exposition réelle. Sans engagement, sans rendez-vous commercial.</p>
+      <a href="#diagnostic" class="btn inv">Faire mon diagnostic gratuit</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIED DE PAGE ============ -->
+<footer>
+  <div class="w">
+    <div class="pg">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:14px">
+          <svg class="logo-mark" viewBox="0 0 30 38" aria-hidden="true">
+            <rect x="2" y="2" width="24" height="34" rx="3" fill="#741424"/>
+            <rect x="4.5" y="4.5" width="19" height="29" rx="2" fill="none" stroke="#C9962B" stroke-width="1"/>
+            <circle cx="14" cy="16" r="5" fill="none" stroke="#C9962B" stroke-width="1.4"/>
+            <circle cx="12" cy="16" r="1.1" fill="#C9962B"/><circle cx="16" cy="16" r="1.1" fill="#C9962B"/>
+            <path d="M11 10.5v-2M17 10.5v-2" stroke="#C9962B" stroke-width="1.2" stroke-linecap="round"/>
+            <rect x="9" y="25" width="10" height="4" rx="1" fill="none" stroke="#C9962B" stroke-width="1.1"/>
+            <circle cx="14" cy="27" r="1" fill="#C9962B"/>
+            <path d="M26 6v28" stroke="#741424" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-txt">
+            <span class="logo-bar b"></span>
+            <span class="logo-nom"><span class="p">PASSEPORT</span> <span class="i">IA</span></span>
+            <span class="logo-bar r"></span>
+          </span>
+        </a>
+        <p style="font-size:14px;color:var(--gris-txt);max-width:250px">La mise en conformité IA des TPE et PME françaises, en français et sans jargon.</p>
+      </div>
+      <div>
+        <h4>Nos offres</h4>
+        <a href="#diagnostic">Diagnostic gratuit</a>
+        <a href="#offres">Pack Starter</a>
+        <a href="#offres">Pack Conformité</a>
+        <a href="#offres">Passeport complet</a>
+        <a href="#offres">Formation Article 4</a>
+      </div>
+      <div>
+        <h4>Comprendre</h4>
+        <a href="articles.html">Tous les articles</a>
+        <a href="#concerne">Suis-je concerné ?</a>
+        <a href="#dates">Les vraies dates</a>
+        <a href="https://artificialintelligenceact.eu/fr/" target="_blank" rel="noopener">Le texte du règlement</a>
+        <a href="https://www.cnil.fr" target="_blank" rel="noopener">La CNIL</a>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+        <a href="cgv.html">Conditions générales de vente</a>
+        <a href="mailto:contact@passeport-ia.fr">contact@passeport-ia.fr</a>
+      </div>
+    </div>
+
+    <div class="mentions">
+      <p class="badge-ia">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--vert);display:inline-block"></span>
+        Certains contenus de ce site ont été rédigés avec l'assistance d'une intelligence artificielle, relus et validés par nos équipes.
+      </p>
+      <p><strong>Passeport IA</strong> fournit des modèles opérationnels et un accompagnement de mise en place. L'entretien de 45 minutes se tient avec un conseiller juridique mais ne constitue pas une consultation juridique formelle. Nos documents sont à faire valider par votre avocat si vous souhaitez une garantie contractuelle.</p>
+      <p style="margin-top:10px">Le label « <strong>IA Transparente</strong> » est un label privé délivré par Passeport IA. Il n'est pas une certification officielle et ne se substitue pas au marquage CE, lequel s'applique aux fournisseurs de systèmes d'IA à haut risque.</p>
+      <p style="margin-top:10px">La <strong>formation</strong> est dispensée par un organisme de formation partenaire certifié. Elle est éligible à une prise en charge par votre OPCO, dont le montant dépend de votre branche professionnelle, de votre effectif et de la validation de votre dossier. Aucun financement rétroactif n'est possible. Une session s'ouvre à partir de huit participants inscrits.</p>
+      <p style="margin-top:10px">Passeport IA est une initiative indépendante, sans lien avec les services de l'État ni avec aucune autorité publique.</p>
+      <p style="margin-top:16px">© 2026 Passeport IA</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

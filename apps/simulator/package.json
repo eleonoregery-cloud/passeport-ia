@@ -1,0 +1,16 @@
+{
+  "name": "passeport-ia-simulator",
+  "private": true,
+  "type": "module",
+  "workspaces": ["client", "server"],
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w client\" \"npm run dev -w server\"",
+    "build": "npm run build -w client"
+  }
+}

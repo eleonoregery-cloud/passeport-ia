@@ -1,0 +1,231 @@
+/* =========================================================
+   PASSEPORT IA, feuille de style partagée
+   Une seule modification ici change TOUTES les pages du site.
+   ========================================================= */
+
+:root{
+  /* Couleurs de la marque, prélevées sur le logo */
+  --bleu:        #0044A8;   /* bleu du mot PASSEPORT et de la barre haute */
+  --bleu-fonce:  #002F76;   /* survol et textes sur fond clair */
+  --bleu-pale:   #E7EEF9;   /* fonds légers */
+  --bleu-tres-pale:#F4F7FC;
+  --rouge:       #E30613;   /* rouge du mot IA et de la barre basse */
+  --rouge-pale:  #FCEAEB;
+  --rouge-txt:   #9B0710;   /* rouge assombri, lisible sur fond rouge pâle */
+  --bordeaux:    #741424;   /* couverture du passeport */
+  --or:          #C9962B;   /* robot du logo, assombri pour rester lisible */
+  --vert:        #17603D;   /* validations, assombri pour le contraste */
+  --vert-pale:   #E3F1E9;
+  --vert-txt:    #124B30;
+  --ambre:       #8A5210;   /* jalons à venir */
+
+  /* Neutres */
+  --noir:        #141414;
+  --gris-txt:    #4A4A4A;   /* texte secondaire, contraste 8:1 sur blanc */
+  --gris-doux:   #6B6B6B;   /* mentions, contraste 5,7:1 sur blanc */
+  --bord:        #DFDFDD;
+  --fond:        #F5F5F3;
+  --blanc:       #FFFFFF;
+
+  --r:10px; --r-l:16px;
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--noir); background:var(--blanc); line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+.w{max-width:1100px;margin:0 auto;padding:0 24px}
+.w-etroit{max-width:820px;margin:0 auto;padding:0 24px}
+section{padding:76px 0}
+.gris{background:var(--fond);border-top:1px solid var(--bord);border-bottom:1px solid var(--bord)}
+h1,h2,h3{line-height:1.22;letter-spacing:-.022em;color:var(--noir)}
+h1{font-size:44px;font-weight:700}
+h2{font-size:32px;font-weight:600;margin-bottom:14px}
+h3{font-size:20px;font-weight:600;margin-bottom:8px}
+h4{font-size:16px;font-weight:600;margin-bottom:6px}
+p{color:var(--noir)}
+.lead{font-size:17px;color:var(--gris-txt);max-width:680px}
+.ctr{text-align:center}
+.ctr .lead{margin-left:auto;margin-right:auto}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);margin-bottom:12px}
+.txt-doux{color:var(--gris-txt)}
+@media(max-width:760px){h1{font-size:31px}h2{font-size:25px}section{padding:54px 0}}
+
+/* ---------- logo ---------- */
+.logo{display:inline-flex;align-items:center;gap:11px;text-decoration:none}
+.logo-mark{width:30px;height:38px;flex-shrink:0}
+.logo-txt{display:flex;flex-direction:column;line-height:1}
+.logo-bar{height:3px;width:100%;border-radius:1px}
+.logo-bar.b{background:var(--bleu)}
+.logo-bar.r{background:var(--rouge)}
+.logo-nom{font-size:18px;font-weight:700;letter-spacing:.055em;padding:5px 0;white-space:nowrap}
+.logo-nom .p{color:var(--bleu)}
+.logo-nom .i{color:var(--rouge)}
+.logo-devise{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gris-doux);margin-top:4px}
+
+/* ---------- en-tête ---------- */
+header{border-bottom:1px solid var(--bord);background:var(--blanc);position:sticky;top:0;z-index:60}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0}
+nav{display:flex;align-items:center;gap:24px}
+nav a.n{font-size:14.5px;color:var(--gris-txt);text-decoration:none;padding:6px 0}
+nav a.n:hover{color:var(--noir);text-decoration:underline}
+@media(max-width:900px){nav a.n{display:none}}
+
+/* ---------- boutons ---------- */
+.btn{
+  display:inline-block;text-decoration:none;text-align:center;
+  padding:14px 26px;border-radius:var(--r);font-size:15px;font-weight:600;
+  border:2px solid var(--bleu);color:var(--bleu);background:var(--blanc);
+  transition:background .15s,color .15s;cursor:pointer;font-family:inherit;min-height:48px;
+}
+.btn:hover{background:var(--bleu-pale)}
+.btn:focus-visible{outline:3px solid var(--ambre);outline-offset:2px}
+.btn.p{background:var(--bleu);color:var(--blanc);border-color:var(--bleu)}
+.btn.p:hover{background:var(--bleu-fonce);border-color:var(--bleu-fonce)}
+.btn.sm{padding:10px 18px;font-size:14px;min-height:42px}
+.btn.bl{display:block;width:100%}
+.btn.inv{background:var(--blanc);color:var(--bleu);border-color:var(--blanc)}
+.btn.inv:hover{background:var(--bleu-pale);color:var(--bleu-fonce)}
+
+/* ---------- cartes et grilles ---------- */
+.g{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.card{background:var(--blanc);border:1px solid var(--bord);border-radius:var(--r-l);padding:26px}
+.card.pl{background:var(--fond);border-color:transparent}
+
+/* ---------- liens dans le texte ---------- */
+a.lien{color:var(--bleu);text-decoration:underline;text-underline-offset:2px}
+a.lien:hover{color:var(--bleu-fonce)}
+
+/* ---------- pied de page ---------- */
+footer{background:var(--fond);border-top:1px solid var(--bord);padding:50px 0 34px;margin-top:76px}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:32px;margin-bottom:32px}
+footer h4{font-size:12.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:12px}
+footer a{display:block;font-size:14.5px;color:var(--gris-txt);text-decoration:none;margin-bottom:8px}
+footer a:hover{color:var(--noir);text-decoration:underline}
+.mentions{border-top:1px solid var(--bord);padding-top:24px;font-size:13px;color:var(--gris-doux);line-height:1.75}
+.mentions strong{color:var(--gris-txt)}
+.mentions a{display:inline;color:var(--gris-txt);text-decoration:underline}
+.badge-ia{
+  display:inline-flex;align-items:center;gap:8px;background:var(--blanc);
+  border:1px solid var(--bord);border-radius:20px;padding:8px 14px;
+  font-size:13px;color:var(--gris-txt);margin-bottom:18px;
+}
+
+/* ---------- pages de contenu (mentions, CGV…) ---------- */
+.doc{padding:56px 0 20px}
+.doc h1{font-size:36px;margin-bottom:10px}
+.doc .maj{font-size:14px;color:var(--gris-doux);margin-bottom:36px}
+.doc h2{font-size:22px;margin:36px 0 10px}
+.doc h3{font-size:17px;margin:22px 0 6px}
+.doc p{font-size:15.5px;color:var(--gris-txt);margin-bottom:12px}
+.doc ul{margin:0 0 16px 22px}
+.doc li{font-size:15.5px;color:var(--gris-txt);margin-bottom:7px}
+.doc table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:14.5px}
+.doc th,.doc td{border:1px solid var(--bord);padding:10px 13px;text-align:left;vertical-align:top}
+.doc th{background:var(--fond);font-weight:600;color:var(--noir)}
+.doc td{color:var(--gris-txt)}
+.encart{background:var(--bleu-pale);border-left:4px solid var(--bleu);border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:20px 0}
+.encart p{color:var(--bleu-fonce);margin-bottom:0}
+
+@media print{header,.btn,nav{display:none}body{background:#fff}}
+
+/* =========================================================
+   ARTICLES, référencement naturel
+   Utilisé par articles.html et par chaque page d'article.
+   ========================================================= */
+
+.wn{max-width:760px}                       /* colonne de lecture, 70 à 80 caractères */
+
+/* --- fil d'Ariane --- */
+.fil{font-size:13.5px;color:var(--gris-doux);margin-bottom:22px}
+.fil a{color:var(--gris-txt);text-decoration:none}
+.fil a:hover{color:var(--bleu);text-decoration:underline}
+.fil span[aria-hidden]{margin:0 6px;color:var(--bord)}
+
+/* --- en-tête d'article --- */
+.art-tete{background:var(--bleu-tres-pale);border-bottom:1px solid var(--bord);padding:38px 0 42px}
+.art-tete h1{margin-bottom:18px}
+.art-chapo{font-size:18.5px;line-height:1.6;color:var(--gris-txt)}
+.art-info{font-size:13.5px;color:var(--gris-doux);margin-top:18px}
+
+/* --- corps de l'article --- */
+.art-corps{padding:52px 0 60px}
+.art-corps h2{font-size:25px;margin:44px 0 16px;letter-spacing:-.015em}
+.art-corps h2:first-of-type{margin-top:0}
+.art-corps h3{font-size:19px;margin:30px 0 10px}
+.art-corps p{margin-bottom:16px;font-size:16.5px;line-height:1.72;color:var(--noir)}
+.art-corps a{color:var(--bleu);text-decoration:underline;text-underline-offset:2px}
+.art-corps a:hover{color:var(--bleu-fonce)}
+
+.art-corps .liste,.art-corps .liste-num{margin:0 0 18px 0;padding-left:22px}
+.art-corps .liste{list-style:disc}
+.art-corps .liste-num{list-style:decimal}
+.art-corps .liste li,.art-corps .liste-num li{margin-bottom:11px;font-size:16.5px;line-height:1.68;padding-left:4px}
+
+/* --- encadré de mise en garde --- */
+.encadre{background:var(--bleu-pale);border-left:3px solid var(--bleu);border-radius:0 var(--r) var(--r) 0;padding:20px 22px;margin:26px 0}
+.encadre p{margin-bottom:0;font-size:16px;color:var(--noir)}
+.encadre-t{font-weight:600;font-size:14px !important;letter-spacing:.02em;color:var(--bleu-fonce);margin-bottom:8px !important}
+
+/* --- modèle de texte à recopier --- */
+.modele{background:var(--fond);border:1px solid var(--bord);border-radius:var(--r);padding:17px 20px;margin:20px 0}
+.modele p{margin-bottom:0;font-size:15.5px;color:var(--noir)}
+.modele-t{font-size:10.5px !important;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--gris-doux);margin-bottom:8px !important}
+
+/* --- tableaux d'article --- */
+.tbl-scroll{overflow-x:auto;margin:24px 0;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.tbl th{background:var(--fond);color:var(--noir);text-align:left;font-weight:600;font-size:13.5px;padding:11px 14px;border:1px solid var(--bord)}
+.tbl td{padding:11px 14px;border:1px solid var(--bord);color:var(--noir);vertical-align:top;line-height:1.5;background:var(--blanc)}
+.tbl .hi-b{color:var(--bleu-fonce);font-weight:600;background:var(--bleu-pale)}
+.tbl .hi-r{color:var(--rouge-txt);font-weight:600;background:var(--rouge-pale)}
+.tbl .hi-v{color:var(--vert-txt);font-weight:600;background:var(--vert-pale)}
+
+/* --- questions fréquentes dans l'article --- */
+.faq-art{border-top:1px solid var(--bord);margin-top:8px}
+.faq-art details{border-bottom:1px solid var(--bord)}
+.faq-art summary{cursor:pointer;padding:16px 34px 16px 0;font-weight:600;font-size:16px;color:var(--noir);position:relative;list-style:none}
+.faq-art summary::-webkit-details-marker{display:none}
+.faq-art summary::after{content:'+';position:absolute;right:6px;top:14px;font-size:21px;font-weight:400;color:var(--bleu)}
+.faq-art details[open] summary::after{content:'–'}
+.faq-art details[open] summary{color:var(--bleu-fonce)}
+.faq-art p{padding:0 0 18px;margin:0;color:var(--gris-txt);font-size:16px;line-height:1.68}
+
+/* --- appel à l'action en fin d'article --- */
+.art-cta{background:var(--bleu-pale);border:1px solid #C9D9F0;border-radius:var(--r-l);padding:28px;margin-top:46px;text-align:center}
+.art-cta-t{font-size:20px !important;font-weight:600;color:var(--bleu-fonce);margin-bottom:8px !important;letter-spacing:-.01em}
+.art-cta-p{font-size:15.5px !important;color:var(--gris-txt);max-width:480px;margin:0 auto 20px !important}
+
+/* --- cartes d'articles, index et bloc de la page d'accueil --- */
+.art-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.art-grille{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.art-grille{grid-template-columns:1fr}}
+
+.art-carte{display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--bord);border-radius:var(--r-l);padding:22px;text-decoration:none;transition:border-color .15s,transform .15s}
+.art-carte:hover{border-color:var(--bleu);transform:translateY(-2px)}
+.art-cat{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--bleu);margin-bottom:11px}
+.art-titre{font-size:17.5px;font-weight:600;color:var(--noir);line-height:1.35;letter-spacing:-.01em;margin-bottom:10px}
+.art-res{font-size:14.5px;color:var(--gris-txt);line-height:1.58;flex:1;margin-bottom:16px}
+.art-meta{font-size:13px;color:var(--gris-doux);display:flex;align-items:center;justify-content:space-between}
+.art-fl{color:var(--bleu);font-size:19px;line-height:1}
+
+.art-bloc{margin-bottom:48px}
+.art-bloc:last-child{margin-bottom:0}
+.art-bloc-t{font-size:22px;margin-bottom:20px;padding-bottom:11px;border-bottom:2px solid var(--bleu);display:inline-block}
+
+.lien-fort{color:var(--bleu);font-weight:600;text-decoration:underline;text-underline-offset:3px;font-size:15.5px}
+.lien-fort:hover{color:var(--bleu-fonce)}
+
+@media(max-width:620px){
+  .art-tete{padding:30px 0 34px}
+  .art-corps{padding:40px 0 46px}
+  .art-corps h2{font-size:22px;margin-top:36px}
+}

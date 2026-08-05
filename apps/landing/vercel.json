@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/diagnostic", "destination": "https://REMPLACER-PAR-URL-SIMULATEUR.vercel.app/diagnostic" },
+    { "source": "/diagnostic/:path*", "destination": "https://REMPLACER-PAR-URL-SIMULATEUR.vercel.app/diagnostic/:path*" }
+  ]
+}

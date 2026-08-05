@@ -1,7 +1,11 @@
 {
   "name": "passeport-ia",
   "private": true,
-  "workspaces": ["client", "server"],
-  "scripts": {"dev": "concurrently \"npm run dev -w client\" \"npm run dev -w server\"", "build": "npm run build -w client"},
-  "devDependencies": {"concurrently": "^9.1.2"}
+  "scripts": {
+    "install:all": "npm install --prefix apps/simulator/client && npm install --prefix apps/simulator/server && npm install --prefix apps/backoffice",
+    "dev:simulator": "npm run dev --prefix apps/simulator",
+    "dev:backoffice": "npm run dev --prefix apps/backoffice",
+    "build:simulator": "npm run build --prefix apps/simulator",
+    "build:backoffice": "npm run build --prefix apps/backoffice"
+  }
 }

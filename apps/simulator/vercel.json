@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "client/dist",
+  "rewrites": [
+    { "source": "/diagnostic/api/:path*", "destination": "/api/:path*" },
+    { "source": "/diagnostic/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/diagnostic", "destination": "/index.html" },
+    { "source": "/diagnostic/", "destination": "/index.html" }
+  ]
+}

@@ -1,8 +1,4 @@
-import express from 'express';
-import cors from 'cors';
-const app = express(); app.use(cors()); app.use(express.json());
-
-const RULES = [
+export const RULES = [
   {
     key: 'sensitive', label: 'Usages sensibles',
     classify: a => (a.sensitive || []).some(x => !['Aucun de ces usages', 'Je ne sais pas'].includes(x)) ? 'bad' : 'good',
@@ -60,16 +56,16 @@ const RULES = [
   },
 ];
 
-app.post('/api/results', (req, res) => {
-  const a = req.body.answers || {};
+export function computeResult(answers) {
   const bad = [], partial = [], good = [];
   RULES.forEach(rule => {
-    const state = rule.classify(a);
+    const state = rule.classify(answers);
     const item = { key: rule.key, label: rule.label, ...rule[state] };
     if (state === 'bad') bad.push(item);
     else if (state === 'partial') partial.push(item);
     else good.push(item);
   });
-  res.json({ bad, partial, good, total: RULES.length });
-});
-app.listen(process.env.PORT || 3001, () => console.log('API available on port 3001'));
+  const total = RULES.length;
+  const riskScore = Math.round(((bad.length + partial.length * 0.5) / total) * 100);
+  return { bad, partial, good, total, riskScore, conforme: bad.length === 0 && partial.length === 0 };
+}
