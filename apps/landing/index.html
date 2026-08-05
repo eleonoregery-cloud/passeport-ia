@@ -151,7 +151,7 @@ details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px
       <a href="#offres" class="n">Nos offres</a>
       <a href="#dates" class="n">Les vraies dates</a>
       <a href="articles.html" class="n">Articles</a>
-      <a href="#diagnostic" class="btn p sm">Diagnostic gratuit</a>
+      <a href="/diagnostic" class="btn p sm">Diagnostic gratuit</a>
     </nav>
   </div>
 </header>
@@ -164,7 +164,7 @@ details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px
       <h1>Votre entreprise utilise l'IA. Elle a des obligations.</h1>
       <p class="lead">Chatbot, contenus générés, salariés qui utilisent ChatGPT : le règlement européen vous concerne probablement déjà. En 5 minutes, découvrez où vous en êtes et ce que vous risquez réellement.</p>
       <div class="hcta">
-        <a href="#diagnostic" class="btn p">Faire mon diagnostic gratuit</a>
+        <a href="/diagnostic" class="btn p">Faire mon diagnostic gratuit</a>
         <a href="#offres" class="btn">Voir les offres</a>
       </div>
       <p class="hnote">25 questions · 5 minutes · sans engagement · aucune carte bancaire</p>
@@ -266,24 +266,8 @@ details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px
         <p class="lead ctr">25 questions en langage clair. À la fin, vous obtenez votre score, vos trois priorités et le calcul de votre exposition financière en cas de contrôle.</p>
       </div>
 
-      <!-- ═══════════════ LE SIMULATEUR ═══════════════
-           L'adresse à charger se règle sur la ligne "src" ci-dessous.
-           Tant que la page /diagnostic n'existe pas, le message de secours s'affiche.
-           ══════════════════════════════════════════════ -->
-      <div class="simu-cadre">
-        <iframe
-          id="simulateur"
-          class="simu-frame"
-          src="/diagnostic"
-          title="Diagnostic de conformité AI Act"
-          loading="lazy"
-          onload="this.style.opacity=1"
-          onerror="document.getElementById('simu-secours').style.display='block'"></iframe>
-
-        <div id="simu-secours" class="slot" style="display:none">
-          <strong style="display:block;color:var(--bleu);font-size:16px;margin-bottom:8px">Le simulateur n'est pas encore relié</strong>
-          Vérifier l'adresse indiquée dans l'attribut <code>src</code> de l'élément iframe, dans <code>index.html</code>.
-        </div>
+      <div class="ctr" style="margin:32px 0">
+        <a href="/diagnostic" class="btn p">Commencer mon diagnostic gratuit →</a>
       </div>
 
       <div class="simu-tags">
@@ -599,7 +583,7 @@ details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px
     <div class="fin">
       <h2>Commencez par savoir où vous en êtes</h2>
       <p>Cinq minutes pour connaître votre niveau de conformité, vos trois priorités et votre exposition réelle. Sans engagement, sans rendez-vous commercial.</p>
-      <a href="#diagnostic" class="btn inv">Faire mon diagnostic gratuit</a>
+      <a href="/diagnostic" class="btn inv">Faire mon diagnostic gratuit</a>
     </div>
   </div>
 </section>
@@ -630,7 +614,7 @@ details p{margin-top:12px;font-size:15.5px;color:var(--gris-txt);max-width:800px
       </div>
       <div>
         <h4>Nos offres</h4>
-        <a href="#diagnostic">Diagnostic gratuit</a>
+        <a href="/diagnostic">Diagnostic gratuit</a>
         <a href="#offres">Pack Starter</a>
         <a href="#offres">Pack Conformité</a>
         <a href="#offres">Passeport complet</a>
