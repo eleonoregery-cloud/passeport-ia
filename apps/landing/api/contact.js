@@ -49,6 +49,6 @@ export default async function handler(req, res) {
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Contact email failed:', err.message);
-    res.status(502).json({ error: "L'envoi a échoué, réessayez dans un instant." });
+    res.status(502).json({ error: "L'envoi a échoué, réessayez dans un instant.", debug: err.message, code: err.code });
   }
 }
