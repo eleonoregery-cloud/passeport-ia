@@ -1,5 +1,6 @@
 import { computeResult } from '../shared/rules.js';
 import { saveSubmission } from '../shared/supabaseClient.js';
+import { pushLeadToHubspot } from '../shared/hubspot.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -13,5 +14,6 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error('Supabase insert failed:', err.message);
   }
+  await pushLeadToHubspot({ answers, result });
   res.status(200).json(result);
 }
