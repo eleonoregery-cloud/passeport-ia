@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { supabase } from './supabaseClient.js';
+import { downloadReportPdf } from './report.js';
 import logoUrl from './assets/logo-passeport-ia-fond-blanc.png';
 import './styles.css';
 
@@ -57,6 +58,10 @@ function Detail({ row, onClose }) {
     ['Partiel', result.partial, 'partial'],
     ['Conforme', result.good, 'ok'],
   ];
+  const downloadReport = () => downloadReportPdf({
+    contact: { company: row.company, firstName: row.first_name, lastName: row.last_name, email: row.email, sector: row.sector, date: row.created_at },
+    result: { ...result, riskScore: row.risk_score },
+  });
   return (
     <div className="overlay" onClick={onClose}>
       <div className="card detail" onClick={e => e.stopPropagation()}>
@@ -65,6 +70,7 @@ function Detail({ row, onClose }) {
         <p className="meta">{row.first_name} {row.last_name} · {row.email} {row.phone ? `· ${row.phone}` : ''}</p>
         <p className="meta">Secteur : {row.sector || '—'} · Taille : {row.size || '—'} · {new Date(row.created_at).toLocaleString('fr-FR')}</p>
         <p className={'badge ' + (row.conforme ? 'ok' : 'bad')}>{row.conforme ? 'CONFORME' : 'NON CONFORME'} — {row.risk_score}% de non-conformité</p>
+        <button className="secondary" onClick={downloadReport}>Télécharger le rapport (PDF)</button>
         {groups.map(([title, items, tone]) => (
           <section key={title}>
             <h3 className={tone}>{title}</h3>
@@ -136,7 +142,7 @@ function Dashboard({ session }) {
       {!loading && !error && (
         <table>
           <thead>
-            <tr><th>Date</th><th>Entreprise</th><th>Contact</th><th>Secteur</th><th>Score</th><th>Statut</th></tr>
+            <tr><th>Date</th><th>Entreprise</th><th>Contact</th><th>Secteur</th><th>Score</th><th>Statut</th><th>Rapport</th></tr>
           </thead>
           <tbody>
             {filtered.map(r => (
@@ -147,9 +153,10 @@ function Dashboard({ session }) {
                 <td>{r.sector || '—'}</td>
                 <td>{r.risk_score}%</td>
                 <td><span className={'badge ' + (r.conforme ? 'ok' : 'bad')}>{r.conforme ? 'Conforme' : 'Non conforme'}</span></td>
+                <td><button className="secondary" onClick={e => { e.stopPropagation(); downloadReportPdf({ contact: { company: r.company, firstName: r.first_name, lastName: r.last_name, email: r.email, sector: r.sector, date: r.created_at }, result: { ...(r.result || {}), riskScore: r.risk_score } }); }}>PDF</button></td>
               </tr>
             ))}
-            {filtered.length === 0 && <tr><td colSpan={6} className="empty">Aucune soumission.</td></tr>}
+            {filtered.length === 0 && <tr><td colSpan={7} className="empty">Aucune soumission.</td></tr>}
           </tbody>
         </table>
       )}

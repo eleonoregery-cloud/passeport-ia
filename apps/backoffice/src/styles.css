@@ -38,6 +38,7 @@ th, td { text-align: left; padding: 12px 14px; font-size: 14px; border-bottom: 1
 tbody tr { cursor: pointer; }
 tbody tr:hover { background: var(--gris); }
 .muted { color: #777; font-size: 12px; }
+table button.secondary { padding: 6px 12px; font-size: 12px; }
 .empty { text-align: center; color: #999; padding: 24px; }
 
 .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
@@ -48,6 +49,7 @@ tbody tr:hover { background: var(--gris); }
 .detail { position: relative; width: 100%; max-width: 720px; max-height: 90vh; overflow-y: auto; }
 .detail .close { position: absolute; top: 16px; right: 16px; background: transparent; color: var(--texte); font-size: 22px; padding: 0 8px; }
 .detail h2 { margin: 0 0 4px; color: var(--bordeaux); }
+.detail > button.secondary { margin: 14px 0 4px; }
 .detail .meta { color: #555; font-size: 13px; margin: 2px 0; }
 .detail h3 { margin: 18px 0 6px; font-size: 15px; }
 .detail h3.bad { color: var(--rouge); }
