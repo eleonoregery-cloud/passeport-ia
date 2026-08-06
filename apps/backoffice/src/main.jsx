@@ -61,6 +61,7 @@ function Detail({ row, onClose }) {
   const downloadReport = () => downloadReportPdf({
     contact: { company: row.company, firstName: row.first_name, lastName: row.last_name, email: row.email, sector: row.sector, date: row.created_at },
     result: { ...result, riskScore: row.risk_score },
+    logoUrl,
   });
   return (
     <div className="overlay" onClick={onClose}>
@@ -153,7 +154,7 @@ function Dashboard({ session }) {
                 <td>{r.sector || '—'}</td>
                 <td>{r.risk_score}%</td>
                 <td><span className={'badge ' + (r.conforme ? 'ok' : 'bad')}>{r.conforme ? 'Conforme' : 'Non conforme'}</span></td>
-                <td><button className="secondary" onClick={e => { e.stopPropagation(); downloadReportPdf({ contact: { company: r.company, firstName: r.first_name, lastName: r.last_name, email: r.email, sector: r.sector, date: r.created_at }, result: { ...(r.result || {}), riskScore: r.risk_score } }); }}>PDF</button></td>
+                <td><button className="secondary" onClick={e => { e.stopPropagation(); downloadReportPdf({ contact: { company: r.company, firstName: r.first_name, lastName: r.last_name, email: r.email, sector: r.sector, date: r.created_at }, result: { ...(r.result || {}), riskScore: r.risk_score }, logoUrl }); }}>PDF</button></td>
               </tr>
             ))}
             {filtered.length === 0 && <tr><td colSpan={7} className="empty">Aucune soumission.</td></tr>}

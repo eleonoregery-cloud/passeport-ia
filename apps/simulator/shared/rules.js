@@ -14,7 +14,7 @@ export const RULES = [
   },
   {
     key: 'deepfakeLabel', label: 'Contenus IA',
-    classify: a => ['Oui, systématiquement', 'Non concerné'].includes(a.deepfakeLabel) ? 'good' : a.deepfakeLabel === 'Non' ? 'bad' : 'partial',
+    classify: a => a.syntheticMedia === 'Non' || ['Oui, systématiquement', 'Non concerné'].includes(a.deepfakeLabel) ? 'good' : a.deepfakeLabel === 'Non' ? 'bad' : 'partial',
     bad: { message: 'Contenus synthétiques non signalés comme créés ou modifiés par IA.', solution: 'Ajouter un signalement systématique sur tout contenu IA pouvant sembler authentique.' },
     partial: { message: 'Contenus synthétiques signalés seulement dans certains cas.', solution: 'Généraliser le signalement à l’ensemble des contenus IA concernés.' },
     good: { message: 'Les contenus synthétiques sont signalés comme créés ou modifiés par IA.' },
@@ -42,7 +42,7 @@ export const RULES = [
   },
   {
     key: 'chatbotNotice', label: 'Chatbot',
-    classify: a => ['Oui, claire et visible', 'Non concerné'].includes(a.chatbotNotice) ? 'good' : a.chatbotNotice === 'Non' ? 'bad' : 'partial',
+    classify: a => a.chatbot === 'Non' || ['Oui, claire et visible', 'Non concerné'].includes(a.chatbotNotice) ? 'good' : a.chatbotNotice === 'Non' ? 'bad' : 'partial',
     bad: { message: 'Les personnes ne sont pas informées qu’elles interagissent avec une IA.', solution: 'Ajouter une mention claire et visible dès la première interaction avec le chatbot.' },
     partial: { message: 'La mention informant d’une interaction avec une IA est peu visible.', solution: 'Rendre la mention plus visible dès le début de l’échange.' },
     good: { message: 'Les personnes sont informées qu’elles interagissent avec une IA.' },

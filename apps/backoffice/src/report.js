@@ -1,5 +1,7 @@
 const COLORS = { blue: [0, 0, 145], red: [200, 30, 58], green: [26, 138, 95], amber: [154, 107, 10], gray: [90, 97, 128], dark: [22, 22, 22] };
 const MARGIN = 48;
+const FOOTER_HEIGHT = 70;
+const SITE_URL = 'passeport-ia.fr';
 
 function slug(value) {
   return (value || '')
@@ -8,22 +10,41 @@ function slug(value) {
     .replace(/(^-|-$)/g, '');
 }
 
-export async function downloadReportPdf({ contact, result }) {
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+export async function downloadReportPdf({ contact, result, logoUrl }) {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  let y = 56;
+  let y = 44;
+
+  const logo = logoUrl ? await loadImage(logoUrl).catch(() => null) : null;
+  const logoRatio = logo ? logo.naturalHeight / logo.naturalWidth : 0;
 
   const ensureSpace = needed => {
-    if (y + needed > pageHeight - 60) { doc.addPage(); y = 56; }
+    if (y + needed > pageHeight - FOOTER_HEIGHT) { doc.addPage(); y = 44; }
   };
 
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(...COLORS.blue);
-  doc.text('Passeport IA', MARGIN, y);
+  if (logo) {
+    const headerLogoW = 116; const headerLogoH = headerLogoW * logoRatio;
+    doc.addImage(logo, 'PNG', MARGIN, y, headerLogoW, headerLogoH, 'brand-logo');
+    y += headerLogoH + 16;
+  } else {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(...COLORS.blue);
+    doc.text('Passeport IA', MARGIN, y + 14);
+    y += 30;
+  }
   doc.setFont('helvetica', 'normal'); doc.setFontSize(11); doc.setTextColor(...COLORS.gray);
-  doc.text('Rapport de diagnostic de conformité AI Act', MARGIN, y + 16);
-  y += 42;
+  doc.text('Rapport de diagnostic de conformité AI Act', MARGIN, y);
+  y += 26;
 
   doc.setDrawColor(226, 231, 247); doc.setLineWidth(1); doc.line(MARGIN, y, pageWidth - MARGIN, y);
   y += 20;
@@ -84,6 +105,19 @@ export async function downloadReportPdf({ contact, result }) {
   doc.setFont('helvetica', 'italic'); doc.setFontSize(8.5); doc.setTextColor(...COLORS.gray);
   const notice = doc.splitTextToSize('Ce résultat est indicatif : il ne constitue pas une certification de conformité ni un avis juridique.', pageWidth - MARGIN * 2);
   doc.text(notice, MARGIN, y);
+
+  const footerLogoW = 44; const footerLogoH = footerLogoW * logoRatio;
+  const totalPages = doc.getNumberOfPages();
+  for (let p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    const lineY = pageHeight - 40;
+    doc.setDrawColor(226, 231, 247); doc.setLineWidth(0.75);
+    doc.line(MARGIN, lineY, pageWidth - MARGIN, lineY);
+    const rowY = lineY + 18;
+    if (logo) doc.addImage(logo, 'PNG', MARGIN, rowY - footerLogoH + 4, footerLogoW, footerLogoH, 'brand-logo');
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(...COLORS.gray);
+    doc.text(SITE_URL, pageWidth - MARGIN, rowY, { align: 'right' });
+  }
 
   const filename = `rapport-passeport-ia-${slug(contact.company || contact.lastName) || 'diagnostic'}.pdf`;
   doc.save(filename);
