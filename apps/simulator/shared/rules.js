@@ -49,7 +49,7 @@ export const RULES = [
   },
   {
     key: 'evidence', label: 'Preuves',
-    classify: a => a.evidence === 'Oui, programme, dates, participants et attestations' ? 'good' : a.evidence === 'Non' ? 'bad' : 'partial',
+    classify: a => a.training === 'Non' || a.evidence === 'Non' ? 'bad' : a.evidence === 'Oui, programme, dates, participants et attestations' ? 'good' : 'partial',
     bad: { message: 'Aucune preuve des mesures de formation et de gouvernance.', solution: 'Conserver les preuves des actions menées : programme, dates, participants, attestations.' },
     partial: { message: 'Preuves des mesures de formation ou de gouvernance incomplètes.', solution: 'Compléter la documentation existante avec les éléments manquants (dates, participants, attestations).' },
     good: { message: 'Les preuves des mesures de formation et de gouvernance sont conservées.' },
