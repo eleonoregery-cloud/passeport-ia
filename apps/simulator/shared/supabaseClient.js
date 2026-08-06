@@ -22,6 +22,7 @@ export async function saveSubmission({ answers, result }) {
     consent: !!answers.consent,
     sector: answers.sector || null,
     size: answers.size || null,
+    wants_contact: answers.wantsContact === 'Oui',
     answers,
     result,
     risk_score: result.riskScore,

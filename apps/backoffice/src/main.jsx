@@ -35,7 +35,7 @@ function LoginForm() {
 }
 
 function toCsv(rows) {
-  const headers = ['created_at', 'company', 'first_name', 'last_name', 'email', 'phone', 'sector', 'size', 'risk_score', 'conforme'];
+  const headers = ['created_at', 'company', 'first_name', 'last_name', 'email', 'phone', 'sector', 'size', 'risk_score', 'conforme', 'wants_contact'];
   const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
   const lines = [headers.join(','), ...rows.map(r => headers.map(h => escape(r[h])).join(','))];
   return lines.join('\n');
@@ -71,6 +71,7 @@ function Detail({ row, onClose }) {
         <p className="meta">{row.first_name} {row.last_name} · {row.email} {row.phone ? `· ${row.phone}` : ''}</p>
         <p className="meta">Secteur : {row.sector || '—'} · Taille : {row.size || '—'} · {new Date(row.created_at).toLocaleString('fr-FR')}</p>
         <p className={'badge ' + (row.conforme ? 'ok' : 'bad')}>{row.conforme ? 'CONFORME' : 'NON CONFORME'} — {row.risk_score}% de non-conformité</p>
+        <p className={'badge ' + (row.wants_contact ? 'ok' : 'bad')}>{row.wants_contact ? 'Souhaite être recontacté(e)' : 'Ne souhaite pas être recontacté(e)'}</p>
         <button className="secondary" onClick={downloadReport}>Télécharger le rapport (PDF)</button>
         {groups.map(([title, items, tone]) => (
           <section key={title}>
@@ -93,6 +94,7 @@ function Dashboard({ session }) {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [conformeFilter, setConformeFilter] = useState('all');
+  const [contactFilter, setContactFilter] = useState('all');
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
@@ -110,10 +112,12 @@ function Dashboard({ session }) {
   const filtered = useMemo(() => rows.filter(r => {
     if (conformeFilter === 'conforme' && !r.conforme) return false;
     if (conformeFilter === 'non-conforme' && r.conforme) return false;
+    if (contactFilter === 'oui' && !r.wants_contact) return false;
+    if (contactFilter === 'non' && r.wants_contact) return false;
     if (!search) return true;
     const q = search.toLowerCase();
     return [r.company, r.email, r.first_name, r.last_name].some(v => (v || '').toLowerCase().includes(q));
-  }), [rows, search, conformeFilter]);
+  }), [rows, search, conformeFilter, contactFilter]);
 
   return (
     <main>
@@ -135,6 +139,11 @@ function Dashboard({ session }) {
           <option value="conforme">Conformes</option>
           <option value="non-conforme">Non conformes</option>
         </select>
+        <select value={contactFilter} onChange={e => setContactFilter(e.target.value)}>
+          <option value="all">Recontact : indifférent</option>
+          <option value="oui">Souhaite être recontacté</option>
+          <option value="non">Ne souhaite pas être recontacté</option>
+        </select>
         <button onClick={() => downloadCsv(filtered)} disabled={filtered.length === 0}>Exporter CSV</button>
       </div>
 
@@ -143,7 +152,7 @@ function Dashboard({ session }) {
       {!loading && !error && (
         <table>
           <thead>
-            <tr><th>Date</th><th>Entreprise</th><th>Contact</th><th>Secteur</th><th>Score</th><th>Statut</th><th>Rapport</th></tr>
+            <tr><th>Date</th><th>Entreprise</th><th>Contact</th><th>Secteur</th><th>Score</th><th>Statut</th><th>Recontact</th><th>Rapport</th></tr>
           </thead>
           <tbody>
             {filtered.map(r => (
@@ -154,10 +163,11 @@ function Dashboard({ session }) {
                 <td>{r.sector || '—'}</td>
                 <td>{r.risk_score}%</td>
                 <td><span className={'badge ' + (r.conforme ? 'ok' : 'bad')}>{r.conforme ? 'Conforme' : 'Non conforme'}</span></td>
+                <td><span className={'badge ' + (r.wants_contact ? 'ok' : 'bad')}>{r.wants_contact ? 'Oui' : 'Non'}</span></td>
                 <td><button className="secondary" onClick={e => { e.stopPropagation(); downloadReportPdf({ contact: { company: r.company, firstName: r.first_name, lastName: r.last_name, email: r.email, sector: r.sector, date: r.created_at }, result: { ...(r.result || {}), riskScore: r.risk_score }, logoUrl }); }}>PDF</button></td>
               </tr>
             ))}
-            {filtered.length === 0 && <tr><td colSpan={7} className="empty">Aucune soumission.</td></tr>}
+            {filtered.length === 0 && <tr><td colSpan={8} className="empty">Aucune soumission.</td></tr>}
           </tbody>
         </table>
       )}
